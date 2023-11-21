@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.0" PrivateAssets="all" />
+    <PackageReference Include="Blazored.SessionStorage" Version="2.4.0" />
+    <PackageReference Include="Blazored.TextEditor" Version="1.1.0" />
+    <PackageReference Include="MudBlazor" Version="6.11.0" />
+    <PackageReference Include="MudBlazor.ThemeManager" Version="1.0.8" />
+    <PackageReference Include="BlazorComponentBus" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <BlazorWebAssemblyLazyLoad Include="XmasBlazor.Modules.Before.wasm" />
+    <BlazorWebAssemblyLazyLoad Include="XmasBlazor.Modules.After.wasm" />
+  </ItemGroup>  
+
+  <ItemGroup>
+    <ProjectReference Include="..\XmasBlazor.Modules.After.Extensions\XmasBlazor.Modules.After.Extensions.csproj" />
+    <ProjectReference Include="..\XmasBlazor.Modules.After\XmasBlazor.Modules.After.csproj" />
+    <ProjectReference Include="..\XmasBlazor.Modules.Before.Extensions\XmasBlazor.Modules.Before.Extensions.csproj" />
+    <ProjectReference Include="..\XmasBlazor.Modules.Before\XmasBlazor.Modules.Before.csproj" />
+    <ProjectReference Include="..\XmasBlazor.Shared\XmasBlazor.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
+  </ItemGroup>
+
+</Project>
