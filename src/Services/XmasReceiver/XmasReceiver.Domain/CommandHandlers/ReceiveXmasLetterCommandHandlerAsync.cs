@@ -5,9 +5,9 @@ using XmasReceiver.Messages.Commands;
 
 namespace XmasReceiver.Domain.CommandHandlers;
 
-public sealed class ReceiveXmasLetterCommandHandler : CommandHandlerBaseAsync<ReceiveXmasLetter>
+public sealed class ReceiveXmasLetterCommandHandlerAsync : CommandHandlerBaseAsync<ReceiveXmasLetter>
 {
-	public ReceiveXmasLetterCommandHandler(IRepository repository, ILoggerFactory loggerFactory) : base(repository, loggerFactory)
+	public ReceiveXmasLetterCommandHandlerAsync(IRepository repository, ILoggerFactory loggerFactory) : base(repository, loggerFactory)
 	{
 	}
 

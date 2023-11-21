@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Adapters\" />
-    <Folder Include="EventHandlers\" />
     <Folder Include="Abstracts\" />
   </ItemGroup>
 

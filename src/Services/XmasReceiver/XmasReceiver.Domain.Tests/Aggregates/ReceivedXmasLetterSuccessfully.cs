@@ -35,7 +35,7 @@ public sealed class ReceivedXmasLetterSuccessfully : CommandSpecification<Receiv
 
 	protected override ICommandHandlerAsync<ReceiveXmasLetter> OnHandler()
 	{
-		return new ReceiveXmasLetterCommandHandler(Repository, new NullLoggerFactory());
+		return new ReceiveXmasLetterCommandHandlerAsync(Repository, new NullLoggerFactory());
 	}
 
 	protected override IEnumerable<DomainEvent> Expect()
