@@ -14,6 +14,7 @@ public static class ReceiverHelper
 	{
 		services.AddScoped<IXmasLetterService, XmasLetterService>();
 		services.AddScoped<IQueries<XmasLetter>, XmasLetterQueries>();
+		services.AddScoped<IReceiverFacade, ReceiverFacade>();
 
 		return services;
 	}

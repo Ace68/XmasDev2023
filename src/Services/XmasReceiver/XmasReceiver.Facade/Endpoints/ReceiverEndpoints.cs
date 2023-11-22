@@ -10,8 +10,8 @@ public static class ReceiverEndpoints
 	{
 		var group = endpoints.MapGroup("/v1/receivers/")
 			.WithTags("Receivers");
-		
-		group.MapGet("xmas-letters", HandleGetXmasLetters)
+
+		group.MapGet("xmasletters", HandleGetXmasLetters)
 			.WithName("GetXmasLetters");
 
 		return endpoints;
@@ -21,7 +21,7 @@ public static class ReceiverEndpoints
 		CancellationToken cancellationToken)
 	{
 		var xmasLettersResult = await receiverFacade.GetXmasLetterAsync(cancellationToken);
-		
+
 		return Results.Ok(xmasLettersResult.Results);
 	}
 }
