@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>true</InvariantGlobalization>
+    <UserSecretsId>1034520e-638a-419c-9d44-067d42161edb</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\XmasSagas.Facade\XmasSagas.Facade.csproj" />
+    <ProjectReference Include="..\XmasSagas.Infrastructures\XmasSagas.Infrastructures.csproj" />
   </ItemGroup>
 
 </Project>

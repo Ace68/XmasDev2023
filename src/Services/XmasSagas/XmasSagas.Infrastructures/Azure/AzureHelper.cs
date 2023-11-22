@@ -19,6 +19,7 @@ public static class AzureHelper
 
 		services.AddMufloneTransportAzure(azureServiceBusConfiguration);
 
+		serviceProvider = services.BuildServiceProvider();
 		var serviceBus = serviceProvider.GetRequiredService<IServiceBus>();
 		var sagaRepository = serviceProvider.GetRequiredService<ISagaRepository>();
 		var consumers = serviceProvider.GetRequiredService<IEnumerable<IConsumer>>();
