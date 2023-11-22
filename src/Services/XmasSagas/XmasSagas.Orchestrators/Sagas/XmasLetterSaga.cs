@@ -3,12 +3,14 @@ using Muflone.Persistence;
 using Muflone.Saga;
 using Muflone.Saga.Persistence;
 using XmasSagas.Messages.Commands;
+using XmasSagas.Messages.IntegrationEvents;
 using XmasSagas.Shared.BindingContracts;
 
 namespace XmasSagas.Orchestrators.Sagas;
 
 public class XmasLetterSaga : Saga<XmasLetterSaga.XmasLetterSagaState>,
-	ISagaStartedByAsync<StartXmasLetterSaga>
+	ISagaStartedByAsync<StartXmasLetterSaga>,
+	ISagaEventHandlerAsync<XmasPresentsApproved>
 {
 	public class XmasLetterSagaState
 	{
@@ -40,5 +42,13 @@ public class XmasLetterSaga : Saga<XmasLetterSaga.XmasLetterSagaState>,
 		var receiveXmasLetter = new ReceiveXmasLetter(command.XmasLetterId, command.MessageId, command.XmasLetterNumber,
 						command.ReceivedOn, command.ChildEmail, command.LetterSubject, command.LetterBody);
 		await ServiceBus.SendAsync(receiveXmasLetter);
+	}
+
+	public async Task HandleAsync(XmasPresentsApproved @event)
+	{
+		var correlationId =
+			new Guid(@event.UserProperties.FirstOrDefault(u => u.Key.Equals("CorrelationId")).Value.ToString()!);
+
+		await ServiceBus.SendAsync(new PrepareXmasPresents(@event.XmasLetterId, correlationId, @event.LetterBody));
 	}
 }

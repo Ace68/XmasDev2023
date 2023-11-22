@@ -6,6 +6,7 @@ using Muflone.Transport.Azure;
 using Muflone.Transport.Azure.Abstracts;
 using Muflone.Transport.Azure.Models;
 using XmasSagas.Infrastructures.Azure.Commands;
+using XmasSagas.Infrastructures.Azure.Events;
 
 namespace XmasSagas.Infrastructures.Azure;
 
@@ -27,6 +28,8 @@ public static class AzureHelper
 		{
 			new StartXmasLetterSagaConsumer(serviceBus, sagaRepository, azureServiceBusConfiguration, loggerFactory),
 			new ReceiveXmasLetterConsumer(azureServiceBusConfiguration),
+			new XmasPresentsApprovedConsumer(serviceBus, sagaRepository, azureServiceBusConfiguration, loggerFactory),
+			new PrepareXmasPresentsConsumer(azureServiceBusConfiguration)
 		});
 		services.AddMufloneAzureConsumers(consumers);
 

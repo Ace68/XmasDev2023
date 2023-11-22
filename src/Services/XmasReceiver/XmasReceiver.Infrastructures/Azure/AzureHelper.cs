@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Muflone;
 using Muflone.Persistence;
 using Muflone.Transport.Azure;
 using Muflone.Transport.Azure.Abstracts;
@@ -23,7 +24,9 @@ public static class AzureHelper
 		consumers = consumers.Concat(new List<IConsumer>
 		{
 			new ReceiveXmasLetterConsumer(repository, azureServiceBusConfiguration, loggerFactory),
-			new XmasLetterReceivedConsumer(serviceProvider.GetRequiredService<IXmasLetterService>(), azureServiceBusConfiguration, loggerFactory)
+			new XmasLetterReceivedConsumer(serviceProvider.GetRequiredService<IXmasLetterService>(),
+				serviceProvider.GetRequiredService<IEventBus>(),
+				azureServiceBusConfiguration, loggerFactory)
 		});
 		services.AddMufloneAzureConsumers(consumers);
 

@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\XmasSagas.Shared\XmasSagas.Shared.csproj" />
   </ItemGroup>
 

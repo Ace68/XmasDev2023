@@ -10,11 +10,12 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.22.0" />
     <PackageReference Include="Muflone.Saga.Persistence.MongoDb" Version="6.0.0" />
-    <PackageReference Include="Muflone.Transport.Azure" Version="6.1.7" />
+    <PackageReference Include="Muflone.Transport.Azure" Version="6.1.8" />
     <PackageReference Include="Muflone.Transport.Azure.Saga" Version="6.1.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Azure\Events\" />
     <Folder Include="MongoDb\" />
   </ItemGroup>
 
