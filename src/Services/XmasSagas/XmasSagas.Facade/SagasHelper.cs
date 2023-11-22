@@ -1,7 +1,10 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
+using Muflone.Transport.Azure.Models;
 using XmasSagas.Facade.Validators;
+using XmasSagas.Infrastructures;
+using XmasSagas.Shared.Configurations;
 
 namespace XmasSagas.Facade;
 
@@ -17,8 +20,10 @@ public static class SagasHelper
 		return services;
 	}
 
-	public static IServiceCollection AddSagasInfrastructure(this IServiceCollection services)
+	public static IServiceCollection AddSagasInfrastructure(this IServiceCollection services,
+		MongoDbSettings mongoDbSettings, AzureServiceBusConfiguration azureServiceBusConfiguration)
 	{
+		services.AddInfrastructures(mongoDbSettings, azureServiceBusConfiguration);
 
 		return services;
 	}

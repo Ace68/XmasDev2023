@@ -16,12 +16,29 @@ public class XmasLetterSaga : Saga<XmasLetterSaga.XmasLetterSagaState>,
 		public XmasLetterContract Body { get; set; } = new();
 	}
 
-	public XmasLetterSaga(IServiceBus serviceBus, ISagaRepository repository, ILoggerFactory loggerFactory) : base(serviceBus, repository, loggerFactory)
+	public XmasLetterSaga(IServiceBus serviceBus, ISagaRepository repository, ILoggerFactory loggerFactory) : base(
+		serviceBus, repository, loggerFactory)
 	{
 	}
 
-	public Task StartedByAsync(StartXmasLetterSaga command)
+	public async Task StartedByAsync(StartXmasLetterSaga command)
 	{
-		throw new NotImplementedException();
+		SagaState = new XmasLetterSagaState
+		{
+			SagaId = command.MessageId.ToString(),
+			Body = new XmasLetterContract
+			{
+				XmasLetterNumber = command.XmasLetterNumber.Value,
+				ReceivedOn = command.ReceivedOn.Value,
+				ChildEmail = command.ChildEmail.Value,
+				LetterSubject = command.LetterSubject.Value,
+				LetterBody = command.LetterBody.Value
+			}
+		};
+		await Repository.SaveAsync(command.MessageId, SagaState);
+
+		var receiveXmasLetter = new ReceiveXmasLetter(command.XmasLetterId, command.MessageId, command.XmasLetterNumber,
+						command.ReceivedOn, command.ChildEmail, command.LetterSubject, command.LetterBody);
+		await ServiceBus.SendAsync(receiveXmasLetter);
 	}
 }

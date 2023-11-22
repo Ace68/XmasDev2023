@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\XmasSagas.Facade\XmasSagas.Facade.csproj" />
-    <ProjectReference Include="..\XmasSagas.Infrastructures\XmasSagas.Infrastructures.csproj" />
   </ItemGroup>
 
 </Project>

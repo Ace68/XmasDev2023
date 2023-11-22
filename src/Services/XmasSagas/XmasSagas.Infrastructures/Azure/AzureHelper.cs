@@ -25,7 +25,8 @@ public static class AzureHelper
 		var consumers = serviceProvider.GetRequiredService<IEnumerable<IConsumer>>();
 		consumers = consumers.Concat(new List<IConsumer>
 		{
-			new StartXmasLetterSagaConsumer(serviceBus, sagaRepository, azureServiceBusConfiguration, loggerFactory)
+			new StartXmasLetterSagaConsumer(serviceBus, sagaRepository, azureServiceBusConfiguration, loggerFactory),
+
 		});
 		services.AddMufloneAzureConsumers(consumers);
 
