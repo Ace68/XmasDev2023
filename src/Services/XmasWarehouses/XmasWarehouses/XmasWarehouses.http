@@ -1,0 +1,6 @@
+@XmasWarehouses_HostAddress = http://localhost:5127
+
+GET {{XmasWarehouses_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
