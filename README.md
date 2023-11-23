@@ -37,5 +37,13 @@ It was introduced by Greg Young, and, as every pattern, is not a "one size fit a
 Each microservice in this solution has its own ReadModel (MongoDb) and its own EventStore.
 
 # Run Solution
-> - docker build -t xmasdev2023 .  
-> - docker run --rm -p 8000:80 xmasdev2023
+> - Prepare Infrastructure: docker-compose up -d (inside docker folder)  
+> - XmasSagas:
+> > - docker build xmassagas .
+> > - docker run --rm -p 8000:80 xmassagas
+> - XmasReceiver:
+> > - docker build xmasreceiver .
+> > - docker run --rm -p 8000:80 xmasreceiver
+> - XmasWarehouses:
+> > - docker build xmaswarehouses .
+> > - docker run --rm -p 8000:80 xmaswarehouses

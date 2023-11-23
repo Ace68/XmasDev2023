@@ -16,7 +16,7 @@ public static class WarehousesHelper
 		return services;
 	}
 
-	public static IServiceCollection AddWarehousesInfrastructure(IServiceCollection services,
+	public static IServiceCollection AddWarehousesInfrastructure(this IServiceCollection services,
 		MongoDbSettings mongoDbSettings,
 		AzureServiceBusConfiguration azureServiceBusConfiguration,
 		string eventStoreConnectionString)
