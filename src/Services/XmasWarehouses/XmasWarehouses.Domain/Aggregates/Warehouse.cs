@@ -34,7 +34,11 @@ public class Warehouse : AggregateRoot
 
 	internal void PrepareXmasPresents(XmasLetterId xmasLetterId, Guid correlationId, LetterBody letterBody)
 	{
-		//RaiseEvent(new XmasPresentsPrepared(_warehouseId, letterBody));
+		RaiseEvent(new XmasPresentsPrepared(xmasLetterId, correlationId, letterBody));
+	}
+
+	private void Apply(XmasPresentsPrepared @event)
+	{
 	}
 	#endregion
 }

@@ -1,4 +1,7 @@
-﻿namespace XmasWarehouses.Modules;
+﻿using Muflone.Transport.Azure.Models;
+using XmasWarehouses.Shared.Configurations;
+
+namespace XmasWarehouses.Modules;
 
 public class InfrastructureModule : IModule
 {
@@ -7,10 +10,10 @@ public class InfrastructureModule : IModule
 
 	public IServiceCollection RegisterModule(WebApplicationBuilder builder)
 	{
-		//var azureServiceBusSettings = builder.Configuration.GetSection("XmasDev:ServiceBusSettings")
-		//	.Get<AzureServiceBusConfiguration>()!;
-		//var mongoDbSettings = builder.Configuration.GetSection("XmasDev:MongoDbSettings")
-		//	.Get<MongoDbSettings>()!;
+		var azureServiceBusSettings = builder.Configuration.GetSection("XmasDev:ServiceBusSettings")
+			.Get<AzureServiceBusConfiguration>()!;
+		var mongoDbSettings = builder.Configuration.GetSection("XmasDev:MongoDbSettings")
+			.Get<MongoDbSettings>()!;
 
 		//builder.Services.AddSagasInfrastructure(mongoDbSettings, azureServiceBusSettings);
 

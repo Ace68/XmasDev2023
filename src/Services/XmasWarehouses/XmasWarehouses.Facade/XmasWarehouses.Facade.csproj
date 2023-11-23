@@ -9,6 +9,12 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Muflone.Transport.Azure" Version="6.1.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XmasWarehouses.Infrastructures\XmasWarehouses.Infrastructures.csproj" />
+    <ProjectReference Include="..\XmasWarehouses.ReadModel\XmasWarehouses.ReadModel.csproj" />
   </ItemGroup>
 
 </Project>

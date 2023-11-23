@@ -17,21 +17,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmasReceiver", "XmasReceive
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmasReceiver.Facade", "XmasReceiver.Facade\XmasReceiver.Facade.csproj", "{71FE20E9-79C4-4212-A7A2-368CEED36615}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmasReceiver.ReadModel", "XmasReceiver.ReadModel\XmasReceiver.ReadModel.csproj", "{5E312C91-6A5B-412B-8A88-5A8F00EC3192}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmasReceiver.ReadModel", "XmasReceiver.ReadModel\XmasReceiver.ReadModel.csproj", "{5E312C91-6A5B-412B-8A88-5A8F00EC3192}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmasReceiver.Messages", "XmasReceiver.Messages\XmasReceiver.Messages.csproj", "{4053AE2B-5E2F-4685-A5F5-681431A85ABF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmasReceiver.Messages", "XmasReceiver.Messages\XmasReceiver.Messages.csproj", "{4053AE2B-5E2F-4685-A5F5-681431A85ABF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmasReceiver.Shared", "XmasReceiver.Shared\XmasReceiver.Shared.csproj", "{1F9138DA-DC9C-46DD-80C7-411CD447B31F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmasReceiver.Shared", "XmasReceiver.Shared\XmasReceiver.Shared.csproj", "{1F9138DA-DC9C-46DD-80C7-411CD447B31F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmasReceiver.Domain", "XmasReceiver.Domain\XmasReceiver.Domain.csproj", "{DD06CBC2-BF58-449A-8AD4-FA26DE8A01F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmasReceiver.Domain", "XmasReceiver.Domain\XmasReceiver.Domain.csproj", "{DD06CBC2-BF58-449A-8AD4-FA26DE8A01F0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{AFDCC07C-85E3-40C6-B746-C92056258606}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmasReceiver.Domain.Tests", "XmasReceiver.Domain.Tests\XmasReceiver.Domain.Tests.csproj", "{2E244045-071E-4CEF-81F7-B2F3694E614A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmasReceiver.Domain.Tests", "XmasReceiver.Domain.Tests\XmasReceiver.Domain.Tests.csproj", "{2E244045-071E-4CEF-81F7-B2F3694E614A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "80 Infrastructures", "80 Infrastructures", "{3319E867-2694-4CFE-88D0-B070F27F3233}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmasReceiver.Infrastructures", "XmasReceiver.Infrastructures\XmasReceiver.Infrastructures.csproj", "{7CAB8577-4E40-49F3-AD46-908901B4D8BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmasReceiver.Infrastructures", "XmasReceiver.Infrastructures\XmasReceiver.Infrastructures.csproj", "{7CAB8577-4E40-49F3-AD46-908901B4D8BE}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{7F559E72-B8F2-404C-B9C5-BB2C436C0523}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,10 @@ Global
 		{7CAB8577-4E40-49F3-AD46-908901B4D8BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CAB8577-4E40-49F3-AD46-908901B4D8BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CAB8577-4E40-49F3-AD46-908901B4D8BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F559E72-B8F2-404C-B9C5-BB2C436C0523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F559E72-B8F2-404C-B9C5-BB2C436C0523}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F559E72-B8F2-404C-B9C5-BB2C436C0523}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F559E72-B8F2-404C-B9C5-BB2C436C0523}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
