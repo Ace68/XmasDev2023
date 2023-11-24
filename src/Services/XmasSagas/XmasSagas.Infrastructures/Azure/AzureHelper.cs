@@ -29,7 +29,9 @@ public static class AzureHelper
 			new StartXmasLetterSagaConsumer(serviceBus, sagaRepository, azureServiceBusConfiguration, loggerFactory),
 			new ReceiveXmasLetterConsumer(azureServiceBusConfiguration),
 			new XmasPresentsApprovedConsumer(serviceBus, sagaRepository, azureServiceBusConfiguration, loggerFactory),
-			new PrepareXmasPresentsConsumer(azureServiceBusConfiguration)
+			new PrepareXmasPresentsConsumer(azureServiceBusConfiguration),
+			new XmasPresentsReadyToSendConsumer(serviceBus, sagaRepository, azureServiceBusConfiguration, loggerFactory),
+			new SendXmasPresentsConsumer(azureServiceBusConfiguration),
 		});
 		services.AddMufloneAzureConsumers(consumers);
 

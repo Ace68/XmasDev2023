@@ -14,6 +14,6 @@ public sealed class XmasLetterReceivedForIntegrationEventHandlerAsync
 		var correlationId =
 			new Guid(@event.UserProperties.FirstOrDefault(u => u.Key.Equals("CorrelationId")).Value.ToString()!);
 
-		await eventBus.PublishAsync(new XmasPresentsApproved(@event.XmasLetterId, correlationId, @event.LetterBody));
+		await eventBus.PublishAsync(new XmasPresentsApproved(@event.XmasLetterId, correlationId, @event.LetterBody), cancellationToken);
 	}
 }

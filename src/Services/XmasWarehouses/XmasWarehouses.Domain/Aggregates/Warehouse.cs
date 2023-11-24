@@ -21,12 +21,7 @@ public class Warehouse : AggregateRoot
 
 	private Warehouse(WarehouseId warehouseId)
 	{
-		RaiseEvent(new WarehouseCreated(warehouseId));
-	}
-
-	private void Apply(WarehouseCreated @event)
-	{
-		_warehouseId = @event.WarehouseId;
+		Id = warehouseId;
 	}
 	#endregion
 

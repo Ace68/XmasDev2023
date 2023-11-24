@@ -11,6 +11,8 @@ public static class WarehousesEndpoints
 		var group = endpoints.MapGroup("/v1/warehouses/")
 			.WithTags("Warehouses");
 
+		group.MapGet("", () => Results.Ok());
+
 		return endpoints;
 	}
 }

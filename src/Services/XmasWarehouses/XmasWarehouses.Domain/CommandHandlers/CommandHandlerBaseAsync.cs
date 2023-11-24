@@ -21,10 +21,10 @@ public abstract class CommandHandlerBaseAsync<TCommand> : CommandHandlerAsync<TC
 		}
 		catch (Exception ex)
 		{
+			// Better to raise an event to notify the error
 			Logger.LogError(
 				"Error processing command: {Type} - Aggregate: {CommandAggregateId} - CommandId : {CommandMessageId} - Messagge: {ExMessage} - Stack Trace {ExStackTrace}",
 				command.GetType(), command.AggregateId, command.MessageId, ex.Message, ex.StackTrace);
-			throw;
 		}
 	}
 

@@ -14,11 +14,7 @@ public sealed class PrepareXmasPresentsCommandHandler : CommandHandlerBaseAsync<
 
 	public override async Task ProcessCommand(PrepareXmasPresents command, CancellationToken cancellationToken = default)
 	{
-		var aggregate = await Repository.GetByIdAsync<Warehouse>(command.XmasLetterId.Value);
-		if (aggregate == null || aggregate.Id == null)
-		{
-			aggregate = Warehouse.CreateWarehouse(new WarehouseId(command.XmasLetterId.Value));
-		}
+		var aggregate = Warehouse.CreateWarehouse(new WarehouseId(command.XmasLetterId.Value));
 		aggregate.PrepareXmasPresents(command.XmasLetterId, command.MessageId, command.LetterBody);
 		await Repository.SaveAsync(aggregate, Guid.NewGuid());
 	}

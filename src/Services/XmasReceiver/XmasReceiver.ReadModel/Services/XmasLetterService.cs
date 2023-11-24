@@ -11,7 +11,7 @@ namespace XmasReceiver.ReadModel.Services;
 public sealed class XmasLetterService : BaseService, IXmasLetterService
 {
 	private readonly IQueries<XmasLetter> _queries;
-	
+
 	public XmasLetterService(IPersister persister, ILoggerFactory loggerFactory, IQueries<XmasLetter> queries) : base(persister, loggerFactory)
 	{
 		_queries = queries;
@@ -21,7 +21,11 @@ public sealed class XmasLetterService : BaseService, IXmasLetterService
 		ChildEmail childEmail, LetterSubject letterSubject, LetterBody letterBody, XmasLetterStatus xmasLetterStatus,
 		CancellationToken cancellationToken = default)
 	{
-		var entity = XmasLetter.CreateXmasLetter(aggregateId, xmasLetterNumber, receivedOn, childEmail, letterSubject, letterBody, xmasLetterStatus);
+		var entity = await Persister.GetByIdAsync<XmasLetter>(aggregateId.Value.ToString(), cancellationToken);
+		if (entity != null && !string.IsNullOrWhiteSpace(entity.XmasLetterNumber))
+			return;
+
+		entity = XmasLetter.CreateXmasLetter(aggregateId, xmasLetterNumber, receivedOn, childEmail, letterSubject, letterBody, xmasLetterStatus);
 		await Persister.InsertAsync(entity, cancellationToken);
 	}
 

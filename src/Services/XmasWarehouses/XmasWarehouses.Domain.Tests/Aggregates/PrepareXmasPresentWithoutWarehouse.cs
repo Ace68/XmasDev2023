@@ -41,7 +41,6 @@ public class PrepareXmasPresentWithoutWarehouse : CommandSpecification<PrepareXm
 
 	protected override IEnumerable<DomainEvent> Expect()
 	{
-		yield return new WarehouseCreated(_warehouseId);
 		yield return new XmasPresentsPrepared(_xmasLetterId, _correlationId, _letterBody);
 	}
 }
