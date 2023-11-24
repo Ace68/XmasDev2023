@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
-using Muflone.Transport.Azure.Models;
 using XmasSagas.Facade.Validators;
 using XmasSagas.Infrastructures;
 using XmasSagas.Shared.Configurations;
@@ -21,9 +20,9 @@ public static class SagasHelper
 	}
 
 	public static IServiceCollection AddSagasInfrastructure(this IServiceCollection services,
-		MongoDbSettings mongoDbSettings, AzureServiceBusConfiguration azureServiceBusConfiguration)
+		MongoDbSettings mongoDbSettings, RabbitMqSettings rabbitMqSettings)
 	{
-		services.AddInfrastructures(mongoDbSettings, azureServiceBusConfiguration);
+		services.AddInfrastructures(mongoDbSettings, rabbitMqSettings);
 
 		return services;
 	}

@@ -1,5 +1,4 @@
-﻿using Muflone.Transport.Azure.Models;
-using XmasReceiver.Infrastructures;
+﻿using XmasReceiver.Facade;
 using XmasReceiver.Shared.Configurations;
 
 namespace XmasReceiver.Modules;
@@ -13,10 +12,10 @@ public class InfrastructureModule : IModule
 	{
 		var mongoDbSettings = builder.Configuration.GetSection("XmasDev:MongoDbSettings")
 			.Get<MongoDbSettings>()!;
-		var azureSettings = builder.Configuration.GetSection("XmasDev:ServiceBusSettings")
-			.Get<AzureServiceBusConfiguration>()!;
+		var rabbitMqSettings = builder.Configuration.GetSection("XmasDev:RabbitMqSettings")
+			.Get<RabbitMqSettings>()!;
 
-		builder.Services.AddInfrastructure(mongoDbSettings, azureSettings, builder.Configuration["XmasDev:EventStore:ConnectionString"]!);
+		builder.Services.AddReceiverInfrastructure(mongoDbSettings, rabbitMqSettings, builder.Configuration["XmasDev:EventStore:ConnectionString"]!);
 
 		return builder.Services;
 	}

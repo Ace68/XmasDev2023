@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using XmasReceiver.Infrastructures.MongoDb;
+using XmasReceiver.Infrastructures;
 using XmasReceiver.ReadModel.Abstracts;
 using XmasReceiver.ReadModel.Entities;
 using XmasReceiver.ReadModel.Queries;
@@ -19,9 +19,12 @@ public static class ReceiverHelper
 		return services;
 	}
 
-	public static IServiceCollection AddReceiverInfrastructure(this IServiceCollection services, MongoDbSettings mongoDbSettings)
+	public static IServiceCollection AddReceiverInfrastructure(this IServiceCollection services,
+		MongoDbSettings mongoDbSettings,
+		RabbitMqSettings rabbitMqSettings,
+		string eventStoreConnectionString)
 	{
-		services.AddMongoDb(mongoDbSettings);
+		services.AddInfrastructure(mongoDbSettings, rabbitMqSettings, eventStoreConnectionString);
 
 		return services;
 	}

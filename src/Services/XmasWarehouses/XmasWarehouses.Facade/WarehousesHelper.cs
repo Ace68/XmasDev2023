@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Muflone.Transport.Azure.Models;
 using XmasWarehouses.Infrastructures;
 using XmasWarehouses.ReadModel.Services;
 using XmasWarehouses.Shared.Configurations;
@@ -18,10 +17,10 @@ public static class WarehousesHelper
 
 	public static IServiceCollection AddWarehousesInfrastructure(this IServiceCollection services,
 		MongoDbSettings mongoDbSettings,
-		AzureServiceBusConfiguration azureServiceBusConfiguration,
+		RabbitMqSettings rabbitMqSettings,
 		string eventStoreConnectionString)
 	{
-		services.AddInfrastructure(mongoDbSettings, azureServiceBusConfiguration, eventStoreConnectionString);
+		services.AddInfrastructure(mongoDbSettings, rabbitMqSettings, eventStoreConnectionString);
 		return services;
 	}
 }
