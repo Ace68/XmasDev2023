@@ -6,15 +6,15 @@ using Muflone.Transport.RabbitMQ;
 using Muflone.Transport.RabbitMQ.Abstracts;
 using Muflone.Transport.RabbitMQ.Factories;
 using Muflone.Transport.RabbitMQ.Models;
-using XmasWarehouses.Infrastructures.RabbitMq.Commands;
-using XmasWarehouses.Infrastructures.RabbitMq.Events;
-using XmasWarehouses.Shared.Configurations;
+using XmasLogistics.Infrastructures.RabbitMq.Commands;
+using XmasLogistics.Infrastructures.RabbitMq.Events;
+using XmasLogistics.Shared.Configurations;
 
-namespace XmasWarehouses.Infrastructures.RabbitMq;
+namespace XmasLogistics.Infrastructures.RabbitMq;
 
 public static class RabbitMqHelper
 {
-	public static IServiceCollection AddRabbitMqForWarehousesModule(this IServiceCollection services,
+	public static IServiceCollection AddRabbitMqForLogisticsModule(this IServiceCollection services,
 		RabbitMqSettings rabbitMqSettings)
 	{
 		var serviceProvider = services.BuildServiceProvider();
@@ -31,8 +31,8 @@ public static class RabbitMqHelper
 		var consumers = serviceProvider.GetRequiredService<IEnumerable<IConsumer>>();
 		consumers = consumers.Concat(new List<IConsumer>
 		{
-			new PrepareXmasPresentsConsumer(repository, mufloneConnectionFactory, loggerFactory),
-			 new XmasPresentsPreparedConsumer(serviceProvider.GetRequiredService<IEventBus>(), mufloneConnectionFactory, loggerFactory)
+			new SendXmasPresentsConsumer(repository, mufloneConnectionFactory, loggerFactory),
+			 new XmasPresentsSentConsumer(serviceProvider.GetRequiredService<IEventBus>(), mufloneConnectionFactory, loggerFactory)
 		});
 		services.AddMufloneRabbitMQConsumers(consumers);
 

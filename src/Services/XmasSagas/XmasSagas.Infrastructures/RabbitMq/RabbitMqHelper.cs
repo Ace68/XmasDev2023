@@ -18,7 +18,6 @@ public static class RabbitMqHelper
 		RabbitMqSettings rabbitMqSettings)
 	{
 		var serviceProvider = services.BuildServiceProvider();
-		var repository = serviceProvider.GetRequiredService<IRepository>();
 		var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
 
 		var rabbitMqConfiguration = new RabbitMQConfiguration(rabbitMqSettings.Host, rabbitMqSettings.Username,
@@ -33,8 +32,8 @@ public static class RabbitMqHelper
 		var consumers = serviceProvider.GetRequiredService<IEnumerable<IConsumer>>();
 		var consumerConfiguration = new ConsumerConfiguration
 		{
-			QueueName = "xmas",
-			ResourceKey = "xmas"
+			QueueName = "StartXmasLetterSaga",
+			ResourceKey = "StartXmasLetterSaga"
 		};
 		consumers = consumers.Concat(new List<IConsumer>
 		{
