@@ -50,4 +50,14 @@ public class XmasLetter : AggregateRoot
 		_letterSubject = @event.LetterSubject;
 		_letterBody = @event.LetterBody;
 	}
+
+	internal void CloseXmasLetter(Guid correlationId)
+	{
+		RaiseEvent(new XmasLetterClosed(_xmasLetterId, correlationId));
+	}
+
+	private void Apply(XmasLetterClosed @event)
+	{
+		_xmasletterStatus = XmasLetterStatus.Processed;
+	}
 }
