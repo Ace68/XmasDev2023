@@ -15,7 +15,7 @@ public static class InfrastructureHelper
 	{
 		services.AddMongoDb(mongoDbSettings);
 		services.AddMufloneEventStore(eventStoreConnectionString);
-		services.AddRabbitMqForSagasModule(rabbitMqSettings);
+		services.AddRabbitMqForWarehousesModule(rabbitMqSettings);
 
 		return services;
 	}

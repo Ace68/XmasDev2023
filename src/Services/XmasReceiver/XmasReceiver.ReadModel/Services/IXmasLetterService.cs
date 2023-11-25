@@ -11,6 +11,7 @@ public interface IXmasLetterService
 	Task ReceiveLetterAsync(XmasLetterId aggregateId, XmasLetterNumber xmasLetterNumber, ReceivedOn receivedOn,
 		ChildEmail childEmail, LetterSubject letterSubject, LetterBody letterBody, XmasLetterStatus xmasLetterStatus,
 		CancellationToken cancellationToken = default);
-	
+
 	Task<PagedResult<XmasLetterContract>> GetXmasLetterAsync(CancellationToken cancellationToken);
+	Task CloseXmasLetterAsync(XmasLetterId xmasLetterId, CancellationToken cancellationToken);
 }

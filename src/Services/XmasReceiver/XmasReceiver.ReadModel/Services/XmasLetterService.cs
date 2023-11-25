@@ -36,4 +36,11 @@ public sealed class XmasLetterService : BaseService, IXmasLetterService
 		return new PagedResult<XmasLetterContract>(results.Results.Select(r => r.ToJson()), results.Page,
 			results.PageSize, results.TotalRecords);
 	}
+
+	public async Task CloseXmasLetterAsync(XmasLetterId xmasLetterId, CancellationToken cancellationToken)
+	{
+		var entity = await Persister.GetByIdAsync<XmasLetter>(xmasLetterId.Value.ToString(), cancellationToken);
+		entity.CloseXmasLetter();
+		await Persister.UpdateAsync(entity, cancellationToken);
+	}
 }

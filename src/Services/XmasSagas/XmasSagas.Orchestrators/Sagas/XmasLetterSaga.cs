@@ -12,16 +12,18 @@ public class XmasLetterSaga : Saga<XmasLetterSaga.XmasLetterSagaState>,
 	ISagaStartedByAsync<StartXmasLetterSaga>,
 	ISagaEventHandlerAsync<XmasPresentsApproved>,
 	ISagaEventHandlerAsync<XmasPresentsReadyToSend>,
-	ISagaEventHandlerAsync<XmasLetterProcessed>
+	ISagaEventHandlerAsync<XmasLetterProcessed>,
+	ISagaEventHandlerAsync<XmasSagaCompleted>
 {
 	public class XmasLetterSagaState
 	{
 		public string SagaId { get; set; } = string.Empty;
 		public XmasLetterContract Body { get; set; } = new();
 
-		public bool XmasPresentsApproved { get; set; } = false;
-		public bool XmasPresentsReadyToSend { get; set; } = false;
-		public bool XmasLetterProcessed { get; set; } = false;
+		public bool XmasPresentsApproved { get; set; }
+		public bool XmasPresentsReadyToSend { get; set; }
+		public bool XmasLetterProcessed { get; set; }
+		public bool XmasSagaClosed { get; set; }
 
 		public DateTime StartedOn { get; set; } = DateTime.UtcNow;
 		public DateTime CompletedOn { get; set; } = DateTime.MinValue;
@@ -88,5 +90,15 @@ public class XmasLetterSaga : Saga<XmasLetterSaga.XmasLetterSagaState>,
 		await Repository.SaveAsync(correlationId, sagaState);
 
 		await ServiceBus.SendAsync(new CloseXmasLetter(@event.XmasLetterId, correlationId));
+	}
+
+	public async Task HandleAsync(XmasSagaCompleted @event)
+	{
+		var correlationId =
+			new Guid(@event.UserProperties.FirstOrDefault(u => u.Key.Equals("CorrelationId")).Value.ToString()!);
+
+		var sagaState = await Repository.GetByIdAsync<XmasLetterSagaState>(correlationId);
+		sagaState.XmasSagaClosed = true;
+		await Repository.SaveAsync(correlationId, sagaState);
 	}
 }

@@ -45,6 +45,8 @@ public static class RabbitMqHelper
 			new SendXmasPresentsConsumer(mufloneConnectionFactory, loggerFactory),
 			new XmasPresentsApprovedConsumer(serviceBus, sagaRepository, mufloneConnectionFactory, loggerFactory),
 			new CloseXmasLetterConsumer(mufloneConnectionFactory, loggerFactory),
+			new XmasLetterProcessedConsumer(serviceBus, sagaRepository, mufloneConnectionFactory, loggerFactory),
+			new XmasSagaCompletedConsumer(serviceBus, sagaRepository, mufloneConnectionFactory, loggerFactory),
 		});
 		services.AddMufloneRabbitMQConsumers(consumers);
 

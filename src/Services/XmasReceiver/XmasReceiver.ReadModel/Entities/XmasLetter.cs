@@ -41,6 +41,8 @@ public class XmasLetter : EntityBase
 		LetterStatus = letterStatus;
 	}
 
+	internal void CloseXmasLetter() => LetterStatus = XmasLetterStatus.Processed.Name;
+
 	public XmasLetterContract ToJson() => new()
 	{
 		XmasLetterNumber = XmasLetterNumber,
