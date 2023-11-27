@@ -9,8 +9,6 @@ var app = builder.Build();
 
 app.UseCors("CorsPolicy");
 
-app.UseAuthentication();
-
 // Register endpoints
 app.MapEndpoints();
 

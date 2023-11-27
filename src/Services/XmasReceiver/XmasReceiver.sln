@@ -31,8 +31,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "80 Infrastructures", "80 In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmasReceiver.Infrastructures", "XmasReceiver.Infrastructures\XmasReceiver.Infrastructures.csproj", "{7CAB8577-4E40-49F3-AD46-908901B4D8BE}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{7F559E72-B8F2-404C-B9C5-BB2C436C0523}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmasReceiver.Domain.Tests", "XmasReceiver.Domain.Tests\XmasReceiver.Domain.Tests.csproj", "{3A2AEC3B-D393-4CB1-84A5-DA2F87CE2174}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B9F295CB-0C58-4E35-9C2F-5AE814DE74F0}"
@@ -73,10 +71,6 @@ Global
 		{7CAB8577-4E40-49F3-AD46-908901B4D8BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CAB8577-4E40-49F3-AD46-908901B4D8BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CAB8577-4E40-49F3-AD46-908901B4D8BE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7F559E72-B8F2-404C-B9C5-BB2C436C0523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7F559E72-B8F2-404C-B9C5-BB2C436C0523}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7F559E72-B8F2-404C-B9C5-BB2C436C0523}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7F559E72-B8F2-404C-B9C5-BB2C436C0523}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3A2AEC3B-D393-4CB1-84A5-DA2F87CE2174}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3A2AEC3B-D393-4CB1-84A5-DA2F87CE2174}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A2AEC3B-D393-4CB1-84A5-DA2F87CE2174}.Release|Any CPU.ActiveCfg = Release|Any CPU
