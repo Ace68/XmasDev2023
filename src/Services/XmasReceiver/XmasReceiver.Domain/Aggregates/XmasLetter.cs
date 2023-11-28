@@ -1,5 +1,7 @@
 ﻿using Muflone.Core;
+using System.Text.Json;
 using XmasReceiver.Messages.DomainEvents;
+using XmasReceiver.Shared.BindingContracts;
 using XmasReceiver.Shared.CustomTypes;
 using XmasReceiver.Shared.DomainIds;
 using XmasReceiver.Shared.Enums;
@@ -24,17 +26,23 @@ public class XmasLetter : AggregateRoot
 
 	internal static XmasLetter ReceiveXmasLetter(XmasLetterId xmasLetterId, Guid correlationId,
 		XmasLetterNumber xmasLetterNumber, ReceivedOn receivedOn, ChildEmail childEmail, LetterSubject letterSubject,
-		LetterBody letterBody)
+		LetterBody letterBody, string sagaState)
 	{
-		var xmasLetter = new XmasLetter(xmasLetterId, correlationId, xmasLetterNumber, receivedOn, childEmail, letterSubject, letterBody);
+		var xmasLetter = new XmasLetter(xmasLetterId, correlationId, xmasLetterNumber, receivedOn, childEmail,
+			letterSubject, letterBody, sagaState);
 		return xmasLetter;
 	}
 
 	private XmasLetter(XmasLetterId xmasLetterId, Guid correlationId, XmasLetterNumber xmasLetterNumber,
-		ReceivedOn receivedOn, ChildEmail childEmail, LetterSubject letterSubject, LetterBody letterBody)
+		ReceivedOn receivedOn, ChildEmail childEmail, LetterSubject letterSubject, LetterBody letterBody, string sagaState)
 	{
-		RaiseEvent(new XmasLetterReceived(xmasLetterId, correlationId, xmasLetterNumber, receivedOn, childEmail,
-			letterSubject, letterBody, XmasLetterStatus.Received));
+		var xmasLetterReceived = new XmasLetterReceived(xmasLetterId, correlationId, xmasLetterNumber, receivedOn,
+			childEmail, letterSubject, letterBody, XmasLetterStatus.Received);
+		var newState = JsonSerializer.Deserialize<XmasSagaState>(sagaState);
+		newState = newState with { XmasLetterReceived = true };
+		xmasLetterReceived.UserProperties.Add("SagaState", JsonSerializer.Serialize(newState));
+
+		RaiseEvent(xmasLetterReceived);
 	}
 
 	private void Apply(XmasLetterReceived @event)

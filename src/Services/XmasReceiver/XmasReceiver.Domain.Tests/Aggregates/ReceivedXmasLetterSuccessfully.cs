@@ -2,9 +2,11 @@
 using Muflone.Messages.Commands;
 using Muflone.Messages.Events;
 using Muflone.SpecificationTests;
+using System.Text.Json;
 using XmasReceiver.Domain.CommandHandlers;
 using XmasReceiver.Messages.Commands;
 using XmasReceiver.Messages.DomainEvents;
+using XmasReceiver.Shared.BindingContracts;
 using XmasReceiver.Shared.CustomTypes;
 using XmasReceiver.Shared.DomainIds;
 using XmasReceiver.Shared.Enums;
@@ -23,6 +25,17 @@ public sealed class ReceivedXmasLetterSuccessfully : CommandSpecification<Receiv
 	private readonly LetterSubject _letterSubject = new("Dear Santa");
 	private readonly LetterBody _letterBody = new("I want a new bike");
 
+	private readonly XmasLetterContract _xmasLetterContract = new();
+
+	public ReceivedXmasLetterSuccessfully()
+	{
+		_xmasLetterContract.XmasLetterNumber = _xmasLetterNumber.Value;
+		_xmasLetterContract.ChildEmail = _childEmail.Value;
+		_xmasLetterContract.LetterSubject = _letterSubject.Value;
+		_xmasLetterContract.ReceivedOn = _receivedOn.Value;
+		_xmasLetterContract.LetterBody = _letterBody.Value;
+	}
+
 	protected override IEnumerable<DomainEvent> Given()
 	{
 		yield break;
@@ -30,7 +43,11 @@ public sealed class ReceivedXmasLetterSuccessfully : CommandSpecification<Receiv
 
 	protected override ReceiveXmasLetter When()
 	{
-		return new ReceiveXmasLetter(_xmasLetterId, _commitId, _xmasLetterNumber, _receivedOn, _childEmail, _letterSubject, _letterBody);
+		var receiveXmasLetter = new ReceiveXmasLetter(_xmasLetterId, _commitId, _xmasLetterNumber, _receivedOn, _childEmail, _letterSubject, _letterBody);
+		receiveXmasLetter.UserProperties.Add("SagaState",
+			JsonSerializer.Serialize(new XmasSagaState(JsonSerializer.Serialize(_xmasLetterContract), false, false,
+				false, false)));
+		return receiveXmasLetter;
 	}
 
 	protected override ICommandHandlerAsync<ReceiveXmasLetter> OnHandler()
@@ -40,6 +57,10 @@ public sealed class ReceivedXmasLetterSuccessfully : CommandSpecification<Receiv
 
 	protected override IEnumerable<DomainEvent> Expect()
 	{
-		yield return new XmasLetterReceived(_xmasLetterId, _commitId, _xmasLetterNumber, _receivedOn, _childEmail, _letterSubject, _letterBody, XmasLetterStatus.Received);
+		var xmasLetterReceived = new XmasLetterReceived(_xmasLetterId, _commitId, _xmasLetterNumber, _receivedOn,
+			_childEmail, _letterSubject, _letterBody, XmasLetterStatus.Received);
+		xmasLetterReceived.UserProperties.Add("SagaState", JsonSerializer.Serialize(new XmasSagaState(JsonSerializer.Serialize(_xmasLetterContract), true, false, false, false)));
+
+		yield return xmasLetterReceived;
 	}
 }

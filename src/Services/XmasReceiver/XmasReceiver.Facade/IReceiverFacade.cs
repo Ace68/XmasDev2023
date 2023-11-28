@@ -5,5 +5,6 @@ namespace XmasReceiver.Facade;
 
 public interface IReceiverFacade
 {
-    Task<PagedResult<XmasLetterContract>> GetXmasLetterAsync(CancellationToken cancellationToken);
+	Task<PagedResult<XmasLetterContract>> GetXmasLetterAsync(CancellationToken cancellationToken);
+	Task<string> PostXmasLetterAsync(XmasLetterContract xmasLetterContract, CancellationToken cancellationToken);
 }

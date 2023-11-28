@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.Extensions.DependencyInjection;
+using XmasReceiver.Facade.Validators;
 using XmasReceiver.Infrastructures;
 using XmasReceiver.ReadModel.Abstracts;
 using XmasReceiver.ReadModel.Entities;
@@ -12,6 +15,10 @@ public static class ReceiverHelper
 {
 	public static IServiceCollection AddReceiver(this IServiceCollection services)
 	{
+		services.AddFluentValidationAutoValidation();
+		services.AddValidatorsFromAssemblyContaining<XmasLetterContractValidator>();
+		services.AddSingleton<ValidationHandler>();
+
 		services.AddScoped<IXmasLetterService, XmasLetterService>();
 		services.AddScoped<IQueries<XmasLetter>, XmasLetterQueries>();
 		services.AddScoped<IReceiverFacade, ReceiverFacade>();

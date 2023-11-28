@@ -5,32 +5,19 @@ using XmasReceiver.Shared.Enums;
 
 namespace XmasReceiver.Messages.DomainEvents;
 
-public sealed class XmasLetterReceived : DomainEvent
-{
-	public readonly XmasLetterId XmasLetterId;
-	public readonly XmasLetterNumber XmasLetterNumber;
-
-	public readonly ReceivedOn ReceivedOn;
-	public readonly ChildEmail ChildEmail;
-
-	public readonly LetterSubject LetterSubject;
-	public readonly LetterBody LetterBody;
-
-	public readonly XmasLetterStatus XmasLetterStatus;
-
-	public XmasLetterReceived(XmasLetterId aggregateId, Guid commitId, XmasLetterNumber xmasLetterNumber,
+public sealed class XmasLetterReceived(XmasLetterId aggregateId, Guid commitId, XmasLetterNumber xmasLetterNumber,
 		ReceivedOn receivedOn, ChildEmail childEmail, LetterSubject letterSubject,
-		LetterBody letterBody, XmasLetterStatus xmasLetterStatus) : base(aggregateId, commitId)
-	{
-		XmasLetterId = aggregateId;
-		XmasLetterNumber = xmasLetterNumber;
+		LetterBody letterBody, XmasLetterStatus xmasLetterStatus)
+	: DomainEvent(aggregateId, commitId)
+{
+	public readonly XmasLetterId XmasLetterId = aggregateId;
+	public readonly XmasLetterNumber XmasLetterNumber = xmasLetterNumber;
 
-		ReceivedOn = receivedOn;
-		ChildEmail = childEmail;
+	public readonly ReceivedOn ReceivedOn = receivedOn;
+	public readonly ChildEmail ChildEmail = childEmail;
 
-		LetterSubject = letterSubject;
-		LetterBody = letterBody;
+	public readonly LetterSubject LetterSubject = letterSubject;
+	public readonly LetterBody LetterBody = letterBody;
 
-		XmasLetterStatus = xmasLetterStatus;
-	}
+	public readonly XmasLetterStatus XmasLetterStatus = xmasLetterStatus;
 }

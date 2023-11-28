@@ -13,8 +13,11 @@ public sealed class ReceiveXmasLetterCommandHandlerAsync : CommandHandlerBaseAsy
 
 	public override async Task ProcessCommand(ReceiveXmasLetter command, CancellationToken cancellationToken = default)
 	{
+		command.UserProperties.TryGetValue("SagaState", out var sagaState);
+
 		var aggregate = XmasLetter.ReceiveXmasLetter(command.XmasLetterId, command.MessageId, command.XmasLetterNumber,
-			command.ReceivedOn, command.ChildEmail, command.LetterSubject, command.LetterBody);
+			command.ReceivedOn, command.ChildEmail, command.LetterSubject, command.LetterBody, sagaState.ToString());
+
 		await Repository.SaveAsync(aggregate, Guid.NewGuid());
 	}
 }
