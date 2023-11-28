@@ -10,14 +10,16 @@ namespace XmasSagas.Modules
 		public IServiceCollection RegisterModule(WebApplicationBuilder builder)
 		{
 			builder.Services.AddEndpointsApiExplorer();
-			builder.Services.AddSwaggerGen(setup => setup.SwaggerDoc("v1", new OpenApiInfo()
+			builder.Services.AddSwaggerGen(setup => setup.SwaggerDoc("v1", new OpenApiInfo
 			{
 				Description = "Xmas Sagas",
 				Title = "XmasSagas",
 				Version = "v1",
 				Contact = new OpenApiContact
 				{
-					Name = "XmasSagas"
+					Name = "XmasSagas",
+					Email = "santa.claus@xmas.com",
+					Url = new Uri("https://www.merrychristmas.com")
 				}
 			}));
 

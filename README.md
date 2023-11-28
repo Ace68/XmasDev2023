@@ -47,13 +47,15 @@ Each microservice in this solution has its own ReadModel (MongoDb) and its own E
 > - Prepare Infrastructure: docker-compose up -d (inside docker folder)  
 > - XmasSagas:
 > > - docker build -t xmassagas .
-> > - docker run --rm -p 5000:80 --name xmassagas xmassagas
+> > - docker run --rm -p 5000:8080 --name xmassagas xmassagas
 > - XmasReceiver:
 > > - docker build -t xmasreceiver .
-> > - docker run --rm -p 5100:80 --name xamsreceiver xmasreceiver
+> > - docker run --rm -p 5100:8080 --name xamsreceiver xmasreceiver
 > - XmasWarehouses:
 > > - docker build -t xmaswarehouses .
-> > - docker run --rm -p 5200:80 --name xmaswarehouses xmaswarehouses
+> > - docker run --rm -p 5200:8080 --name xmaswarehouses xmaswarehouses
 > - XmasLogistics:
 > > - docker build -t xmaslogistics .
-> > - docker run --rm -p 5300:80 --name xmaslogistics xmaslogistics
+> > - docker run --rm -p 5300:8080 --name xmaslogistics xmaslogistics
+
+You can also use the docker-compose file for each microservice, instead of docker run
