@@ -4,16 +4,19 @@ using Muflone.Saga;
 using Muflone.Saga.Persistence;
 using XmasSagas.Messages.Commands;
 using XmasSagas.Messages.IntegrationEvents;
+using XmasSagas.Orchestrators.Hubs;
 using XmasSagas.Shared.BindingContracts;
 
 namespace XmasSagas.Orchestrators.Sagas;
 
-public class XmasLetterSaga : Saga<XmasLetterSaga.XmasLetterSagaState>,
-	ISagaStartedByAsync<StartXmasLetterSaga>,
-	ISagaEventHandlerAsync<XmasPresentsApproved>,
-	ISagaEventHandlerAsync<XmasPresentsReadyToSend>,
-	ISagaEventHandlerAsync<XmasLetterProcessed>,
-	ISagaEventHandlerAsync<XmasSagaCompleted>
+public class XmasLetterSaga(IServiceBus serviceBus, ISagaRepository repository, ILoggerFactory loggerFactory,
+		IHubsHelper hubsHelper)
+	: Saga<XmasLetterSaga.XmasLetterSagaState>(serviceBus, repository, loggerFactory),
+		ISagaStartedByAsync<StartXmasLetterSaga>,
+		ISagaEventHandlerAsync<XmasPresentsApproved>,
+		ISagaEventHandlerAsync<XmasPresentsReadyToSend>,
+		ISagaEventHandlerAsync<XmasLetterProcessed>,
+		ISagaEventHandlerAsync<XmasSagaCompleted>
 {
 	public class XmasLetterSagaState
 	{
@@ -27,11 +30,6 @@ public class XmasLetterSaga : Saga<XmasLetterSaga.XmasLetterSagaState>,
 
 		public DateTime StartedOn { get; set; } = DateTime.UtcNow;
 		public DateTime CompletedOn { get; set; } = DateTime.MinValue;
-	}
-
-	public XmasLetterSaga(IServiceBus serviceBus, ISagaRepository repository, ILoggerFactory loggerFactory)
-		: base(serviceBus, repository, loggerFactory)
-	{
 	}
 
 	public async Task StartedByAsync(StartXmasLetterSaga command)
@@ -64,6 +62,8 @@ public class XmasLetterSaga : Saga<XmasLetterSaga.XmasLetterSagaState>,
 		sagaState.XmasPresentsApproved = true;
 		await Repository.SaveAsync(correlationId, sagaState);
 
+		await hubsHelper.TellChildrenThatXmasLetterWasApproved("Your xmasLetter has been Approved");
+
 		await ServiceBus.SendAsync(new PrepareXmasPresents(@event.XmasLetterId, correlationId, @event.LetterBody), CancellationToken.None);
 	}
 
@@ -85,6 +85,8 @@ public class XmasLetterSaga : Saga<XmasLetterSaga.XmasLetterSagaState>,
 		var correlationId =
 			new Guid(@event.UserProperties.FirstOrDefault(u => u.Key.Equals("CorrelationId")).Value.ToString()!);
 
+		await hubsHelper.TellChildrenThatXmasLetterWasProcessed("Your xmasLetter has been Processed");
+
 		var sagaState = await Repository.GetByIdAsync<XmasLetterSagaState>(correlationId);
 		sagaState.XmasLetterProcessed = true;
 		await Repository.SaveAsync(correlationId, sagaState);
@@ -96,6 +98,9 @@ public class XmasLetterSaga : Saga<XmasLetterSaga.XmasLetterSagaState>,
 	{
 		var correlationId =
 			new Guid(@event.UserProperties.FirstOrDefault(u => u.Key.Equals("CorrelationId")).Value.ToString()!);
+
+		await hubsHelper.TellChildrenThatXmasSagaWasCompleted("Hi! I have done my work again! See you next year.");
+		await hubsHelper.TellChildrenThatXmasSagaWasCompleted("I wish you a Merry Christmas");
 
 		var sagaState = await Repository.GetByIdAsync<XmasLetterSagaState>(correlationId);
 		sagaState.XmasSagaClosed = true;

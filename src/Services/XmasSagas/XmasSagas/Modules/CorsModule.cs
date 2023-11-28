@@ -11,8 +11,8 @@
 			{
 				options.AddPolicy("CorsPolicy", corsBuilder =>
 					corsBuilder.AllowAnyMethod()
-						.AllowAnyOrigin()
-						.AllowAnyHeader());
+						.AllowAnyHeader()
+						.AllowCredentials().SetIsOriginAllowed(_ => true));
 			});
 
 			return builder.Services;

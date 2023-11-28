@@ -15,7 +15,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.0" />
     <PackageReference Include="BlazorComponentBus" Version="2.2.0" />
     <PackageReference Include="Blazored.TextEditor" Version="1.1.0" />
-    <PackageReference Include="MudBlazor" Version="6.11.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.0" />
+    <PackageReference Include="MudBlazor" Version="6.11.1" />
   </ItemGroup>
 
   <ItemGroup>

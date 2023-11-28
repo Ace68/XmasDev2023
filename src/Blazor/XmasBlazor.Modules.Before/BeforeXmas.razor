@@ -1,6 +1,17 @@
 ﻿@inherits BeforeXmasBase
 @page "/before"
 
-@using XmasBlazor.Modules.Before.Components
+@using MudBlazor
 
-<XmasLetter></XmasLetter>
+<MudDataGrid Items="@XmasLetterMessages" Filterable="false" SortMode="@SortMode.None" Groupable="false">
+	<Columns>
+		<PropertyColumn Property="x => x" />
+		<TemplateColumn CellClass="d-flex justify-end">
+			<CellTemplate>
+				<MudStack Row>
+					<MudRating Size="@Size.Small" SelectedValue="5" />
+				</MudStack>
+			</CellTemplate>
+		</TemplateColumn>
+	</Columns>
+</MudDataGrid>

@@ -12,6 +12,5 @@ public sealed class CloseXmasLetterConsumer(IRepository repository, IMufloneConn
 		ILoggerFactory loggerFactory)
 	: CommandConsumerBase<CloseXmasLetter>(repository, connectionFactory, loggerFactory)
 {
-	protected override ICommandHandlerAsync<CloseXmasLetter> HandlerAsync { get; } =
-		new CloseXmasLetterCommandHandlerAsync(repository, loggerFactory);
+	protected override ICommandHandlerAsync<CloseXmasLetter> HandlerAsync { get; } = new CloseXmasLetterCommandHandlerAsync(repository, loggerFactory);
 }

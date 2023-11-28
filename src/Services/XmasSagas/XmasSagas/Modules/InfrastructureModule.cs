@@ -6,7 +6,7 @@ namespace XmasSagas.Modules;
 public class InfrastructureModule : IModule
 {
 	public bool IsEnabled => true;
-	public int Order => 10;
+	public int Order => 20;
 
 	public IServiceCollection RegisterModule(WebApplicationBuilder builder)
 	{

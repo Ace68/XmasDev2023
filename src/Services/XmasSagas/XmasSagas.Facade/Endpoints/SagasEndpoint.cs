@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using XmasSagas.Facade.Validators;
+using XmasSagas.Orchestrators.Hubs;
 using XmasSagas.Shared.BindingContracts;
 
 namespace XmasSagas.Facade.Endpoints;
@@ -16,6 +17,13 @@ public static class SagasEndpoint
 
 		group.MapPost("xmasletters", HandleSendXmasLetters)
 			.WithName("SendXmasLetters");
+
+		return endpoints;
+	}
+
+	public static IEndpointRouteBuilder MapSignalR(this IEndpointRouteBuilder endpoints)
+	{
+		endpoints.MapHub<XmasHub>("/hubs/xmas");
 
 		return endpoints;
 	}

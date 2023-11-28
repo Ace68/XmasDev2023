@@ -4,17 +4,10 @@ using XmasReceiver.Shared.BindingContracts;
 
 namespace XmasReceiver.Facade;
 
-public sealed class ReceiverFacade : IReceiverFacade
+public sealed class ReceiverFacade(IXmasLetterService xmasLetterService) : IReceiverFacade
 {
-    private readonly IXmasLetterService _xmasLetterService;
-
-    public ReceiverFacade(IXmasLetterService xmasLetterService)
-    {
-        _xmasLetterService = xmasLetterService;
-    }
-
-    public async Task<PagedResult<XmasLetterContract>> GetXmasLetterAsync(CancellationToken cancellationToken)
-    {
-        return await _xmasLetterService.GetXmasLetterAsync(cancellationToken);
-    }
+	public async Task<PagedResult<XmasLetterContract>> GetXmasLetterAsync(CancellationToken cancellationToken)
+	{
+		return await xmasLetterService.GetXmasLetterAsync(cancellationToken);
+	}
 }

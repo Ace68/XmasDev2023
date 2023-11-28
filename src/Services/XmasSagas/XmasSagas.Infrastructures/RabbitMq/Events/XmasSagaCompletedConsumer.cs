@@ -1,17 +1,16 @@
-﻿using Microsoft.Extensions.Logging;
-using Muflone.Persistence;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Muflone.Saga;
-using Muflone.Saga.Persistence;
 using Muflone.Transport.RabbitMQ.Abstracts;
 using Muflone.Transport.RabbitMQ.Saga.Consumers;
 using XmasSagas.Messages.IntegrationEvents;
-using XmasSagas.Orchestrators.Sagas;
 
 namespace XmasSagas.Infrastructures.RabbitMq.Events;
 
-public sealed class XmasSagaCompletedConsumer(IServiceBus serviceBus, ISagaRepository sagaRepository,
-	IMufloneConnectionFactory mufloneConnectionFactory, ILoggerFactory loggerFactory)
+public sealed class XmasSagaCompletedConsumer(IServiceProvider serviceProvider,
+		IMufloneConnectionFactory mufloneConnectionFactory, ILoggerFactory loggerFactory)
 	: SagaEventConsumerBase<XmasSagaCompleted>(mufloneConnectionFactory, loggerFactory)
 {
-	protected override ISagaEventHandlerAsync<XmasSagaCompleted> HandlerAsync { get; } = new XmasLetterSaga(serviceBus, sagaRepository, loggerFactory);
+	protected override ISagaEventHandlerAsync<XmasSagaCompleted> HandlerAsync { get; } =
+		serviceProvider.GetRequiredService<ISagaEventHandlerAsync<XmasSagaCompleted>>();
 }

@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Muflone.Persistence;
-using Muflone.Saga.Persistence;
 using Muflone.Transport.RabbitMQ;
 using Muflone.Transport.RabbitMQ.Abstracts;
 using Muflone.Transport.RabbitMQ.Factories;
@@ -27,8 +25,6 @@ public static class RabbitMqHelper
 		services.AddMufloneTransportRabbitMQ(loggerFactory, rabbitMqConfiguration);
 
 		serviceProvider = services.BuildServiceProvider();
-		var serviceBus = serviceProvider.GetRequiredService<IServiceBus>();
-		var sagaRepository = serviceProvider.GetRequiredService<ISagaRepository>();
 		var consumers = serviceProvider.GetRequiredService<IEnumerable<IConsumer>>();
 		var consumerConfiguration = new ConsumerConfiguration
 		{
@@ -37,16 +33,16 @@ public static class RabbitMqHelper
 		};
 		consumers = consumers.Concat(new List<IConsumer>
 		{
-			new StartXmasLetterSagaConsumer(serviceBus, sagaRepository, consumerConfiguration, mufloneConnectionFactory, loggerFactory),
+			new StartXmasLetterSagaConsumer(serviceProvider, consumerConfiguration, mufloneConnectionFactory, loggerFactory),
 			new ReceiveXmasLetterConsumer(mufloneConnectionFactory, loggerFactory),
-			new XmasPresentsApprovedConsumer(serviceBus, sagaRepository, mufloneConnectionFactory, loggerFactory),
+			new XmasPresentsApprovedConsumer(serviceProvider, mufloneConnectionFactory, loggerFactory),
 			new PrepareXmasPresentsConsumer(mufloneConnectionFactory , loggerFactory),
-			new XmasPresentsReadyToSendConsumer(serviceBus, sagaRepository, mufloneConnectionFactory, loggerFactory),
+			new XmasPresentsReadyToSendConsumer(serviceProvider, mufloneConnectionFactory, loggerFactory),
 			new SendXmasPresentsConsumer(mufloneConnectionFactory, loggerFactory),
-			new XmasPresentsApprovedConsumer(serviceBus, sagaRepository, mufloneConnectionFactory, loggerFactory),
+			new XmasPresentsApprovedConsumer(serviceProvider, mufloneConnectionFactory, loggerFactory),
 			new CloseXmasLetterConsumer(mufloneConnectionFactory, loggerFactory),
-			new XmasLetterProcessedConsumer(serviceBus, sagaRepository, mufloneConnectionFactory, loggerFactory),
-			new XmasSagaCompletedConsumer(serviceBus, sagaRepository, mufloneConnectionFactory, loggerFactory),
+			new XmasLetterProcessedConsumer(serviceProvider, mufloneConnectionFactory, loggerFactory),
+			new XmasSagaCompletedConsumer(serviceProvider, mufloneConnectionFactory, loggerFactory),
 		});
 		services.AddMufloneRabbitMQConsumers(consumers);
 
