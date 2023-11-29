@@ -1,12 +1,12 @@
 ﻿using Muflone.Messages.Events;
-using XmasReceiver.Shared.CustomTypes;
-using XmasReceiver.Shared.DomainIds;
+using XmasWarehouses.Shared.CustomTypes;
+using XmasWarehouses.Shared.DomainIds;
 
-namespace XmasReceiver.Messages.IntegrationEvents;
+namespace XmasWarehouses.Messages.Events;
 
 public sealed class XmasPresentsApproved(XmasLetterId aggregateId, Guid correlationId, LetterBody letterBody)
 	: IntegrationEvent(aggregateId,
-	correlationId)
+		correlationId)
 {
 	public readonly XmasLetterId XmasLetterId = aggregateId;
 	public readonly LetterBody LetterBody = letterBody;

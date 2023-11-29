@@ -13,7 +13,11 @@ public sealed class XmasLetterReceivedForIntegrationEventHandlerAsync
 	{
 		var correlationId =
 			new Guid(@event.UserProperties.FirstOrDefault(u => u.Key.Equals("CorrelationId")).Value.ToString()!);
+		@event.UserProperties.TryGetValue("SagaState", out var sagaState);
 
-		await eventBus.PublishAsync(new XmasPresentsApproved(@event.XmasLetterId, correlationId, @event.LetterBody), cancellationToken);
+		var xmasPresentsApproved = new XmasPresentsApproved(@event.XmasLetterId, correlationId, @event.LetterBody);
+		xmasPresentsApproved.UserProperties.Add("SagaState", sagaState);
+
+		await eventBus.PublishAsync(xmasPresentsApproved, cancellationToken);
 	}
 }

@@ -32,7 +32,8 @@ public static class RabbitMqHelper
 		consumers = consumers.Concat(new List<IConsumer>
 		{
 			new PrepareXmasPresentsConsumer(repository, mufloneConnectionFactory, loggerFactory),
-			 new XmasPresentsPreparedConsumer(serviceProvider.GetRequiredService<IEventBus>(), mufloneConnectionFactory, loggerFactory)
+			new XmasPresentsPreparedConsumer(serviceProvider.GetRequiredService<IEventBus>(), mufloneConnectionFactory, loggerFactory),
+			new XmasPresentsApprovedConsumer(serviceProvider, mufloneConnectionFactory, loggerFactory)
 		});
 		services.AddMufloneRabbitMQConsumers(consumers);
 

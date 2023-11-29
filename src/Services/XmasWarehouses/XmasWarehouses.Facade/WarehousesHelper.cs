@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Muflone.Messages.Events;
+using XmasWarehouses.Facade.Adapters;
 using XmasWarehouses.Infrastructures;
+using XmasWarehouses.Messages.Events;
 using XmasWarehouses.ReadModel.Services;
 using XmasWarehouses.Shared.Configurations;
 
@@ -11,6 +14,8 @@ public static class WarehousesHelper
 	{
 		services.AddScoped<IWarehousesService, WarehousesService>();
 		services.AddScoped<IWarehousesFacade, WarehousesFacade>();
+
+		services.AddScoped<IIntegrationEventHandlerAsync<XmasPresentsApproved>, XmasPresentsApprovedEventHandler>();
 
 		return services;
 	}
