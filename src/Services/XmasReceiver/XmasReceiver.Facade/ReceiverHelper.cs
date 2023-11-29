@@ -1,8 +1,11 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
+using Muflone.Messages.Events;
+using XmasReceiver.Facade.Adapters;
 using XmasReceiver.Facade.Validators;
 using XmasReceiver.Infrastructures;
+using XmasReceiver.Messages.IntegrationEvents;
 using XmasReceiver.ReadModel.Abstracts;
 using XmasReceiver.ReadModel.Entities;
 using XmasReceiver.ReadModel.Queries;
@@ -22,6 +25,8 @@ public static class ReceiverHelper
 		services.AddScoped<IXmasLetterService, XmasLetterService>();
 		services.AddScoped<IQueries<XmasLetter>, XmasLetterQueries>();
 		services.AddScoped<IReceiverFacade, ReceiverFacade>();
+
+		services.AddScoped<IIntegrationEventHandlerAsync<XmasLetterProcessed>, XmasLetterProcessedEventHandler>();
 
 		return services;
 	}

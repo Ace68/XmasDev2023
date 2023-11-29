@@ -13,8 +13,11 @@ public sealed class CloseXmasLetterCommandHandlerAsync : CommandHandlerBaseAsync
 
 	public override async Task ProcessCommand(CloseXmasLetter command, CancellationToken cancellationToken = default)
 	{
+		command.UserProperties.TryGetValue("SagaState", out var sagaState);
+
 		var aggregate = await Repository.GetByIdAsync<XmasLetter>(command.AggregateId.Value);
-		aggregate.CloseXmasLetter(command.MessageId);
+		aggregate.CloseXmasLetter(command.MessageId, sagaState.ToString());
+
 		await Repository.SaveAsync(aggregate, Guid.NewGuid());
 	}
 }

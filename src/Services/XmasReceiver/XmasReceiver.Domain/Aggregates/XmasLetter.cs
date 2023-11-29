@@ -59,9 +59,13 @@ public class XmasLetter : AggregateRoot
 		_letterBody = @event.LetterBody;
 	}
 
-	internal void CloseXmasLetter(Guid correlationId)
+	internal void CloseXmasLetter(Guid correlationId, string sagaState)
 	{
-		RaiseEvent(new XmasLetterClosed(_xmasLetterId, correlationId));
+		var xmasLetterClosed = new XmasLetterClosed(_xmasLetterId, correlationId);
+		var newState = JsonSerializer.Deserialize<XmasSagaState>(sagaState);
+		newState = newState! with { XmasSagaClosed = true };
+		xmasLetterClosed.UserProperties.Add("SagaState", JsonSerializer.Serialize(newState));
+		RaiseEvent(xmasLetterClosed);
 	}
 
 	private void Apply(XmasLetterClosed @event)

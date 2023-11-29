@@ -19,8 +19,4 @@
     <ProjectReference Include="..\XmasReceiver.ReadModel\XmasReceiver.ReadModel.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="RabbitMq\Events\" />
-  </ItemGroup>
-
 </Project>

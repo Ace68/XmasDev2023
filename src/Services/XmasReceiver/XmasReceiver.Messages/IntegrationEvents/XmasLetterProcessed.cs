@@ -1,7 +1,7 @@
 ﻿using Muflone.Messages.Events;
-using XmasLogistics.Shared.DomainIds;
+using XmasReceiver.Shared.DomainIds;
 
-namespace XmasLogistics.Messages.Events;
+namespace XmasReceiver.Messages.IntegrationEvents;
 
 public sealed class XmasLetterProcessed
 	(XmasLetterId aggregateId, Guid correlationId) : IntegrationEvent(aggregateId, correlationId)

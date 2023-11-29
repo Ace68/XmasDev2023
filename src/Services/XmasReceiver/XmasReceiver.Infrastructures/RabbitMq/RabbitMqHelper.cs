@@ -37,7 +37,9 @@ public static class RabbitMqHelper
 				serviceProvider.GetRequiredService<IEventBus>(), mufloneConnectionFactory, loggerFactory),
 			new CloseXmasLetterConsumer(repository, mufloneConnectionFactory, loggerFactory),
 			new XmasLetterClosedConsumer(serviceProvider.GetRequiredService<IXmasLetterService>(),
-				serviceProvider.GetRequiredService<IEventBus>(), mufloneConnectionFactory, loggerFactory)
+				serviceProvider.GetRequiredService<IEventBus>(), mufloneConnectionFactory, loggerFactory),
+
+			new XmasLetterProcessedConsumer(serviceProvider, mufloneConnectionFactory, loggerFactory)
 		});
 		services.AddMufloneRabbitMQConsumers(consumers);
 
