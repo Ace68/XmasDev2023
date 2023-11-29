@@ -16,4 +16,8 @@
     <ProjectReference Include="..\XmasLogistics.Shared\XmasLogistics.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Adapters\" />
+  </ItemGroup>
+
 </Project>

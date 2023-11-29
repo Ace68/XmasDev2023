@@ -1,5 +1,7 @@
 ﻿using Muflone.Core;
+using System.Text.Json;
 using XmasLogistics.Messages.Events;
+using XmasLogistics.Shared.BindingContracts;
 using XmasLogistics.Shared.CustomTypes;
 using XmasLogistics.Shared.DomainIds;
 
@@ -26,10 +28,14 @@ public class Warehouse : AggregateRoot
 	#endregion
 
 	#region SentXmasPresents
-
-	internal void SentXmasPresents(XmasLetterId xmasLetterId, Guid correlationId, LetterBody letterBody)
+	internal void SentXmasPresents(XmasLetterId xmasLetterId, Guid correlationId, LetterBody letterBody, string sagaState)
 	{
-		RaiseEvent(new XmasPresentsSent(xmasLetterId, correlationId, letterBody));
+		var xmasPresentsSent = new XmasPresentsSent(xmasLetterId, correlationId, letterBody);
+		var newState = JsonSerializer.Deserialize<XmasSagaState>(sagaState);
+		newState = newState with { XmasLetterProcessed = true };
+		xmasPresentsSent.UserProperties.Add("SagaState", JsonSerializer.Serialize(newState));
+
+		RaiseEvent(xmasPresentsSent);
 	}
 
 	private void Apply(XmasPresentsSent @event)

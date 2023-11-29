@@ -28,7 +28,6 @@ public class Warehouse : AggregateRoot
 	#endregion
 
 	#region PrepareXmasPresents
-
 	internal void PrepareXmasPresents(XmasLetterId xmasLetterId, Guid correlationId, LetterBody letterBody, string sagaState)
 	{
 		var xmasPresentsPrepared = new XmasPresentsPrepared(xmasLetterId, correlationId, letterBody);

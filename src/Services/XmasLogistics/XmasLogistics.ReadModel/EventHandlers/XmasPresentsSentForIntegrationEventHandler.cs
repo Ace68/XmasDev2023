@@ -5,20 +5,17 @@ using XmasLogistics.Messages.Events;
 
 namespace XmasLogistics.ReadModel.EventHandlers;
 
-public sealed class XmasPresentsSentForIntegrationEventHandler : DomainEventHandlerAsync<XmasPresentsSent>
+public sealed class XmasPresentsSentForIntegrationEventHandler
+	(ILoggerFactory loggerFactory, IEventBus eventBus) : DomainEventHandlerAsync<XmasPresentsSent>(loggerFactory)
 {
-	private readonly IEventBus _eventBus;
-
-	public XmasPresentsSentForIntegrationEventHandler(ILoggerFactory loggerFactory, IEventBus eventBus) : base(loggerFactory)
-	{
-		_eventBus = eventBus;
-	}
-
 	public override async Task HandleAsync(XmasPresentsSent @event, CancellationToken cancellationToken = new())
 	{
 		var correlationId =
 			new Guid(@event.UserProperties.FirstOrDefault(u => u.Key.Equals("CorrelationId")).Value.ToString()!);
+		@event.UserProperties.TryGetValue("SagaState", out var sagaState);
+		var xmasLetterProcessed = new XmasLetterProcessed(@event.XmasLetterId, correlationId, @event.LetterBody);
+		xmasLetterProcessed.UserProperties.Add("SagaState", sagaState);
 
-		await _eventBus.PublishAsync(new XmasLetterProcessed(@event.XmasLetterId, correlationId, @event.LetterBody), cancellationToken);
+		await eventBus.PublishAsync(xmasLetterProcessed, cancellationToken);
 	}
 }
