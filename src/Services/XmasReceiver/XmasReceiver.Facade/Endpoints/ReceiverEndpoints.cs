@@ -15,9 +15,14 @@ public static class ReceiverEndpoints
 			.WithTags("Receivers");
 
 		group.MapGet("xmasletters", HandleGetXmasLetters)
+			.Produces<IEnumerable<XmasLetterContract>>()
+			.Produces(StatusCodes.Status200OK)
+			.Produces(StatusCodes.Status500InternalServerError)
 			.WithName("GetXmasLetters");
 
 		group.MapPost("xmasletters", HandlePostXmasLetter)
+			.Produces(StatusCodes.Status201Created)
+			.Produces(StatusCodes.Status500InternalServerError)
 			.WithName("PostXmasLetter");
 
 		return endpoints;
