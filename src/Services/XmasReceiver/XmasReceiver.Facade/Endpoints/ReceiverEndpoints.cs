@@ -12,6 +12,8 @@ public static class ReceiverEndpoints
 			.WithTags("Receivers");
 
 		group.MapGet("xmasletters", HandleGetXmasLetters)
+			.Produces(StatusCodes.Status200OK)
+			.Produces(StatusCodes.Status500InternalServerError)
 			.WithName("GetXmasLetters");
 
 		return endpoints;
