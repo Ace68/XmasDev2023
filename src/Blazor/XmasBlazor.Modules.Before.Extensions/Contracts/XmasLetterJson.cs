@@ -2,7 +2,10 @@
 
 public class XmasLetterJson
 {
-    public string From { get; set; } = string.Empty;
-    public string Subject { get; set; } = string.Empty;
-    public string Body { get; set; } = string.Empty;
+	public string XmasLetterNumber { get; set; } = string.Empty;
+
+	public DateTime ReceivedOn { get; set; } = DateTime.MinValue;
+	public string ChildEmail { get; set; } = string.Empty;
+	public string LetterSubject { get; set; } = string.Empty;
+	public string LetterBody { get; set; } = string.Empty;
 }

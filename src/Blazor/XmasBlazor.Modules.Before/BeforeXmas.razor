@@ -3,6 +3,9 @@
 
 @using MudBlazor
 
+<br/>
+<MudButton Variant="Variant.Filled" Color="Color.Secondary" EndIcon="@Icons.Material.Filled.Send" OnClick=@SendXmasLetterAsync>Send XMasLetter</MudButton>
+<hr />
 <MudDataGrid Items="@XmasLetterMessages" Filterable="false" SortMode="@SortMode.None" Groupable="false">
 	<Columns>
 		<PropertyColumn Property="x => x" />

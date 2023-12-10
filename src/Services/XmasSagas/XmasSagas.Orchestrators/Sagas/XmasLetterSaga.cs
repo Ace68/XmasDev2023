@@ -27,9 +27,6 @@ public class XmasLetterSaga(IServiceBus serviceBus, ISagaRepository repository, 
 		public bool XmasPresentsReadyToSend { get; set; }
 		public bool XmasLetterProcessed { get; set; }
 		public bool XmasSagaClosed { get; set; }
-
-		public DateTime StartedOn { get; set; } = DateTime.UtcNow;
-		public DateTime CompletedOn { get; set; } = DateTime.MinValue;
 	}
 
 	public async Task StartedByAsync(StartXmasLetterSaga command)
@@ -51,6 +48,8 @@ public class XmasLetterSaga(IServiceBus serviceBus, ISagaRepository repository, 
 		var receiveXmasLetter = new ReceiveXmasLetter(command.XmasLetterId, command.MessageId, command.XmasLetterNumber,
 						command.ReceivedOn, command.ChildEmail, command.LetterSubject, command.LetterBody);
 		await ServiceBus.SendAsync(receiveXmasLetter, CancellationToken.None);
+
+		await hubsHelper.TellChildrenThatXmasSagaWasStarted("Your xmasLetter has been Received");
 	}
 
 	public async Task HandleAsync(XmasPresentsApproved @event)
