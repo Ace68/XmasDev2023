@@ -6,7 +6,6 @@ using XmasSagas.Facade.Validators;
 using XmasSagas.Infrastructures;
 using XmasSagas.Messages.Commands;
 using XmasSagas.Messages.IntegrationEvents;
-using XmasSagas.Orchestrators.Hubs;
 using XmasSagas.Orchestrators.Sagas;
 using XmasSagas.Shared.Configurations;
 
@@ -20,7 +19,6 @@ public static class SagasHelper
 		services.AddValidatorsFromAssemblyContaining<XmasLetterContractValidator>();
 		services.AddSingleton<ValidationHandler>();
 		services.AddScoped<ISagasFacade, SagasFacade>();
-		services.AddScoped<IHubsHelper, HubsHelper>();
 
 		services.AddScoped<ISagaStartedByAsync<StartXmasLetterSaga>, XmasLetterSaga>();
 		services.AddScoped<ISagaEventHandlerAsync<XmasPresentsApproved>, XmasLetterSaga>();

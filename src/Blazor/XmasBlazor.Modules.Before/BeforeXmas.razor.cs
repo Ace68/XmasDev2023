@@ -8,7 +8,7 @@ using XmasBlazor.Shared.Configuration;
 
 namespace XmasBlazor.Modules.Before;
 
-public class BeforeXmasBase : ComponentBase, IDisposable
+public class BeforeXmasBase : ComponentBase, IAsyncDisposable
 {
 	[Inject] private IXmasLetterService XmasLetterService { get; set; } = default!;
 	[Inject] private ComponentBus Bus { get; set; } = default!;
@@ -37,18 +37,23 @@ public class BeforeXmasBase : ComponentBase, IDisposable
 			"Waiting for SantaClaus connecting ..."
 		});
 
-		_hubConnection.On<string>("XmasHubConnected", UpdateXmasMessagesAsync);
-		_hubConnection.On<string>("XmasLetterApproved", UpdateXmasMessagesAsync);
-		_hubConnection.On<string>("XmasLetterProcessed", UpdateXmasMessagesAsync);
-		_hubConnection.On<string>("XmasSagaCompleted", UpdateXmasMessagesAsync);
+		_hubConnection.On<string, string>("TellChildrenThatClientIsConnected", UpdateXmasMessagesAsync);
+
+		_hubConnection.On<string, string>("TellChildrenThatXmasSagaWasStarted", UpdateXmasMessagesAsync);
+		_hubConnection.On<string, string>("TellChildrenThatXmasLetterWasApproved", UpdateXmasMessagesAsync);
+		_hubConnection.On<string, string>("TellChildrenThatXmasLetterWasProcessed", UpdateXmasMessagesAsync);
+		_hubConnection.On<string, string>("TellChildrenThatXmasSagaWasCompleted", UpdateXmasMessagesAsync);
 
 		await _hubConnection.StartAsync();
 
 		await base.OnInitializedAsync();
 	}
 
-	private async Task UpdateXmasMessagesAsync(string message)
+	private async Task UpdateXmasMessagesAsync(string target, string message)
 	{
+		if (string.IsNullOrWhiteSpace(message))
+			message = "No Message";
+
 		XmasLetterMessages = XmasLetterMessages.Concat(new List<string>
 		{
 			message
@@ -77,23 +82,22 @@ public class BeforeXmasBase : ComponentBase, IDisposable
 	}
 
 	#region Dispose
-	protected virtual void Dispose(bool disposing)
+	private void ReleaseUnmanagedResources()
 	{
-		if (!disposing)
-			return;
-
-		_hubConnection?.DisposeAsync();
+		// TODO release unmanaged resources here
 	}
 
-	public void Dispose()
+	private async ValueTask DisposeAsyncCore()
 	{
-		this.Dispose(true);
+		ReleaseUnmanagedResources();
+
+		if (_hubConnection != null) await _hubConnection.DisposeAsync();
+	}
+
+	public async ValueTask DisposeAsync()
+	{
+		await DisposeAsyncCore();
 		GC.SuppressFinalize(this);
-	}
-
-	~BeforeXmasBase()
-	{
-		Dispose(false);
 	}
 	#endregion
 }
