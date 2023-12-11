@@ -17,7 +17,7 @@ namespace XmasSagas.Modules
 				Version = "v1",
 				Contact = new OpenApiContact
 				{
-					Name = "XmasSagas",
+					Name = "Santa Claus",
 					Email = "santa.claus@xmas.com",
 					Url = new Uri("https://www.merrychristmas.com")
 				}
