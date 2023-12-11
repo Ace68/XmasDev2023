@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.AspNetCore.SignalR;
 using XmasSagas.Facade.Validators;
 using XmasSagas.Orchestrators.Hubs;
 using XmasSagas.Shared.BindingContracts;
@@ -27,7 +26,10 @@ public static class SagasEndpoint
 
 	public static IEndpointRouteBuilder MapSignalR(this IEndpointRouteBuilder endpoints)
 	{
-		endpoints.MapHub<XmasHub>("/hubs/xmas");
+		endpoints.MapHub<XmasHub>("/hubs/xmas", options =>
+		{
+			options.AllowStatefulReconnects = true;
+		});
 
 		return endpoints;
 	}
@@ -47,9 +49,24 @@ public static class SagasEndpoint
 		return Results.Ok();
 	}
 
-	public static async Task<IResult> HandleSignalR(IHubContext<XmasHub, IHubsHelper> hubContext)
+	//public static async Task<IResult> HandleSignalR(IHubContext<XmasHub, IHubsHelper> hubContext)
+	//{
+	//	await hubContext.Clients.All.TellChildrenThatXmasSagaWasStarted("Santa Claus", "Your xmasLetter has been Received");
+	//	await hubContext.Clients.All.TellChildrenThatXmasLetterWasApproved("Santa Claus", "Your xmasLetter has been Approved");
+	//	await hubContext.Clients.All.TellChildrenThatXmasLetterWasProcessed("Santa Claus", "Your xmasLetter has been Processed");
+	//	await hubContext.Clients.All.TellChildrenThatXmasSagaWasCompleted("Santa Claus", "XmasSaga is completed");
+
+
+	//	return Results.NoContent();
+	//}
+
+	public static async Task<IResult> HandleSignalR(IHubService hubService)
 	{
-		await hubContext.Clients.All.TellChildrenThatXmasSagaWasStarted("Santa Claus", "Your xmasLetter has been Received");
+		await hubService.TellChildrenThatXmasSagaWasStarted("Santa Claus", "Your xmasLetter has been Received");
+		await hubService.TellChildrenThatXmasLetterWasApproved("Santa Claus", "Your xmasLetter has been Approved");
+		await hubService.TellChildrenThatXmasLetterWasProcessed("Santa Claus", "Your xmasLetter has been Processed");
+		await hubService.TellChildrenThatXmasSagaWasCompleted("Santa Claus", "XmasSaga is completed");
+
 
 		return Results.NoContent();
 	}

@@ -29,6 +29,8 @@ public class BeforeXmasBase : ComponentBase, IAsyncDisposable
 
 		_hubConnection = new HubConnectionBuilder()
 			.WithUrl(new Uri(AppConfiguration.SignalRUri))
+			.WithServerTimeout(TimeSpan.FromSeconds(60))
+			.WithKeepAliveInterval(TimeSpan.FromSeconds(15))
 			.WithAutomaticReconnect()
 			.Build();
 

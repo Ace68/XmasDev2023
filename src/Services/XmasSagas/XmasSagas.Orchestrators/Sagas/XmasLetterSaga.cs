@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Muflone.Persistence;
 using Muflone.Saga;
@@ -11,7 +11,7 @@ using XmasSagas.Shared.BindingContracts;
 namespace XmasSagas.Orchestrators.Sagas;
 
 public class XmasLetterSaga(IServiceBus serviceBus, ISagaRepository repository, ILoggerFactory loggerFactory,
-		IHubContext<XmasHub, IHubsHelper> hubContext)
+		IServiceProvider serviceProvider)
 	: Saga<XmasLetterSaga.XmasLetterSagaState>(serviceBus, repository, loggerFactory),
 		ISagaStartedByAsync<StartXmasLetterSaga>,
 		ISagaEventHandlerAsync<XmasPresentsApproved>,
@@ -29,6 +29,8 @@ public class XmasLetterSaga(IServiceBus serviceBus, ISagaRepository repository, 
 		public bool XmasLetterProcessed { get; set; }
 		public bool XmasSagaClosed { get; set; }
 	}
+
+	private readonly IHubService _hubService = serviceProvider.GetRequiredService<IHubService>();
 
 	public async Task StartedByAsync(StartXmasLetterSaga command)
 	{
@@ -50,7 +52,7 @@ public class XmasLetterSaga(IServiceBus serviceBus, ISagaRepository repository, 
 						command.ReceivedOn, command.ChildEmail, command.LetterSubject, command.LetterBody);
 		await ServiceBus.SendAsync(receiveXmasLetter, CancellationToken.None);
 
-		await hubContext.Clients.All.TellChildrenThatXmasSagaWasStarted("Santa Claus", "Your xmasLetter has been Received");
+		await _hubService.TellChildrenThatXmasSagaWasStarted("Santa Claus", "Your xmasLetter has been Received");
 	}
 
 	public async Task HandleAsync(XmasPresentsApproved @event)
@@ -62,7 +64,7 @@ public class XmasLetterSaga(IServiceBus serviceBus, ISagaRepository repository, 
 		sagaState.XmasPresentsApproved = true;
 		await Repository.SaveAsync(correlationId, sagaState);
 
-		await hubContext.Clients.All.TellChildrenThatXmasLetterWasApproved("Santa Claus", "Your xmasLetter has been Approved");
+		await _hubService.TellChildrenThatXmasLetterWasApproved("Santa Claus", "Your xmasLetter has been Approved");
 
 		await ServiceBus.SendAsync(new PrepareXmasPresents(@event.XmasLetterId, correlationId, @event.LetterBody), CancellationToken.None);
 	}
@@ -85,7 +87,7 @@ public class XmasLetterSaga(IServiceBus serviceBus, ISagaRepository repository, 
 		var correlationId =
 			new Guid(@event.UserProperties.FirstOrDefault(u => u.Key.Equals("CorrelationId")).Value.ToString()!);
 
-		await hubContext.Clients.All.TellChildrenThatXmasLetterWasProcessed("Santa Claus", "Your xmasLetter has been Processed");
+		await _hubService.TellChildrenThatXmasLetterWasProcessed("Santa Claus", "Your xmasLetter has been Processed");
 
 		var sagaState = await Repository.GetByIdAsync<XmasLetterSagaState>(correlationId);
 		sagaState.XmasLetterProcessed = true;
@@ -99,8 +101,8 @@ public class XmasLetterSaga(IServiceBus serviceBus, ISagaRepository repository, 
 		var correlationId =
 			new Guid(@event.UserProperties.FirstOrDefault(u => u.Key.Equals("CorrelationId")).Value.ToString()!);
 
-		await hubContext.Clients.All.TellChildrenThatXmasSagaWasCompleted("Santa Claus", "Hi! I have done my work again! See you next year.");
-		await hubContext.Clients.All.TellChildrenThatXmasSagaWasCompleted("Santa Claus", "I wish you a Merry Christmas");
+		await _hubService.TellChildrenThatXmasSagaWasCompleted("Santa Claus", "Hi! I have done my work again! See you next year.");
+		await _hubService.TellChildrenThatXmasSagaWasCompleted("Santa Claus", "I wish you a Merry Christmas");
 
 		var sagaState = await Repository.GetByIdAsync<XmasLetterSagaState>(correlationId);
 		sagaState.XmasSagaClosed = true;
