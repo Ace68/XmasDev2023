@@ -34,9 +34,9 @@ namespace XmasBlazor.Shared.Concretes
 
 			SignalRToken signalRToken = new()
 			{
-				Url = "https://brewup-signalrproxy.service.signalr.net/client/?hub=xmas",
+				Url = "https://brewup-signalrproxy.service.signalr.net/client/?hub=brewup",
 				AccessToken =
-					"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjE1ODcxMjMyNzgifQ.eyJuYmYiOjE3MDM4NjQ5OTMsImV4cCI6MTcwMzg2ODU5MywiaWF0IjoxNzAzODY0OTkzLCJhdWQiOiJodHRwczovL2JyZXd1cC1zaWduYWxycHJveHkuc2VydmljZS5zaWduYWxyLm5ldC9jbGllbnQvP2h1Yj14bWFzIn0.PNBgmCckPh6GXqsMcx7pcEnfKrjo3pmg3lF5PYWz1Mc"
+					"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ii0xOTIzMjYxMDQ3In0.eyJuYmYiOjE3MDQxOTIwNTQsImV4cCI6MTcwNDE5NTY1NCwiaWF0IjoxNzA0MTkyMDU0LCJhdWQiOiJodHRwczovL2JyZXd1cC1zaWduYWxycHJveHkuc2VydmljZS5zaWduYWxyLm5ldC9jbGllbnQvP2h1Yj1icmV3dXAifQ.BUcTlLjLKdGZih9yBNIKUzljwRH-nR5iywNDNIBJ9MQ"
 			};
 
 			return Task.FromResult(signalRToken).Result;

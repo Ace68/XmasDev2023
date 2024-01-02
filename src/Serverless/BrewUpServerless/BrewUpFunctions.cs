@@ -17,7 +17,7 @@ namespace BrewUpServerless
 		[FunctionName("negotiate")]
 		public static SignalRConnectionInfo Negotiate(
 			[HttpTrigger(AuthorizationLevel.Anonymous)] HttpRequest req,
-			[SignalRConnectionInfo(HubName = "xmas")] SignalRConnectionInfo connectionInfo)
+			[SignalRConnectionInfo(HubName = "brewup")] SignalRConnectionInfo connectionInfo)
 		{
 			return connectionInfo;
 		}
@@ -33,13 +33,13 @@ namespace BrewUpServerless
 			};
 		}
 
-		[FunctionName("TellChildrenThatXmasSagaWasStarted")]
+		[FunctionName("TellCustomersThatOrderWasStarted")]
 		public static Task TellChildrenThatXmasSagaWasStarted(
 			[RabbitMQTrigger("TellChildrenThatXmasSagaWasStarted", ConnectionStringSetting = "RabbitMQConnectionString")] string myQueueItem,
-			[SignalR(HubName = "xmas", ConnectionStringSetting = "AzureSignalRConnectionString")] IAsyncCollector<SignalRMessage> signalRMessages,
+			[SignalR(HubName = "brewup", ConnectionStringSetting = "AzureSignalRConnectionString")] IAsyncCollector<SignalRMessage> signalRMessages,
 			ILogger log, ExecutionContext context)
 		{
-			log.LogInformation($"TellChildrenThatXmasSagaWasStarted processed: {myQueueItem}");
+			log.LogInformation($"TellCustomersThatOrderWasStarted processed: {myQueueItem}");
 
 			return signalRMessages.AddAsync(
 				new SignalRMessage

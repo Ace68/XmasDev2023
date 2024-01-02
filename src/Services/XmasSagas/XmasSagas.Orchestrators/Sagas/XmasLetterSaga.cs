@@ -46,11 +46,11 @@ public class XmasLetterSaga(IServiceBus serviceBus, ISagaRepository repository, 
 				LetterBody = command.LetterBody.Value
 			}
 		};
-		await Repository.SaveAsync(command.MessageId, SagaState);
+		//await Repository.SaveAsync(command.MessageId, SagaState);
 
-		var receiveXmasLetter = new ReceiveXmasLetter(command.XmasLetterId, command.MessageId, command.XmasLetterNumber,
-						command.ReceivedOn, command.ChildEmail, command.LetterSubject, command.LetterBody);
-		await ServiceBus.SendAsync(receiveXmasLetter, CancellationToken.None);
+		//var receiveXmasLetter = new ReceiveXmasLetter(command.XmasLetterId, command.MessageId, command.XmasLetterNumber,
+		//				command.ReceivedOn, command.ChildEmail, command.LetterSubject, command.LetterBody);
+		//await ServiceBus.SendAsync(receiveXmasLetter, CancellationToken.None);
 
 		TellChildrenThatXmasSagaWasStarted tellChildrenThatXmasSagaWasStarted = new(command.XmasLetterId, command.MessageId);
 		await ServiceBus.SendAsync(tellChildrenThatXmasSagaWasStarted, CancellationToken.None);
