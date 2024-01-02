@@ -1,0 +1,11 @@
+{
+    "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "AzureWebJobsStorageConnectionStringValue",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "TellChildrenThatXmasSagaWasStarted": "TellChildrenThatXmasSagaWasStarted",
+    "HubName": "xmas",
+    "RabbitMqConnectionString": "amqp://guest:guest@localhost:5672",
+    "AzureSignalRConnectionString": "Endpoint=https://brewup-signalrproxy.service.signalr.net;AccessKey=SfbCNMf1/RetmthVLfN5Wo86vTeYYhG7etxT9oDn9dU=;Version=1.0;"
+  }
+}

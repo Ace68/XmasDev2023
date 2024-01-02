@@ -5,25 +5,25 @@ VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "90 Presentation", "90 Presentation", "{3D461609-74C9-498B-99B8-84422BC63327}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmasSagas", "XmasSagas\XmasSagas.csproj", "{62AEDAE0-D4F8-4C24-BCD6-CA632E248E6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmasSagas", "XmasSagas\XmasSagas.csproj", "{62AEDAE0-D4F8-4C24-BCD6-CA632E248E6B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "50 Facade", "50 Facade", "{A55FB287-4151-49D3-82EE-33660EE9B38E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmasSagas.Facade", "XmasSagas.Facade\XmasSagas.Facade.csproj", "{99148655-115E-4F66-92EB-12622EAE0A9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmasSagas.Facade", "XmasSagas.Facade\XmasSagas.Facade.csproj", "{99148655-115E-4F66-92EB-12622EAE0A9B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "30 Shared", "30 Shared", "{6C6F5F44-F059-4F02-AD39-FFC61F44B622}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmasSagas.Messages", "XmasSagas.Messages\XmasSagas.Messages.csproj", "{5D2D98DC-BBB2-4539-893E-CAB5607BB5C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmasSagas.Messages", "XmasSagas.Messages\XmasSagas.Messages.csproj", "{5D2D98DC-BBB2-4539-893E-CAB5607BB5C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmasSagas.Shared", "XmasSagas.Shared\XmasSagas.Shared.csproj", "{D0DE2690-26C1-4AB4-A4C5-73DD3111429D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmasSagas.Shared", "XmasSagas.Shared\XmasSagas.Shared.csproj", "{D0DE2690-26C1-4AB4-A4C5-73DD3111429D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "80 Infrastructures", "80 Infrastructures", "{A1351B7E-5CFA-4A8C-B922-379D0F2479AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmasSagas.Infrastructures", "XmasSagas.Infrastructures\XmasSagas.Infrastructures.csproj", "{8A6FF815-6160-46F5-8B58-D879DAE2FFE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmasSagas.Infrastructures", "XmasSagas.Infrastructures\XmasSagas.Infrastructures.csproj", "{8A6FF815-6160-46F5-8B58-D879DAE2FFE1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10 Orchestrators", "10 Orchestrators", "{88A0CE59-0358-4268-B5B3-B23CC846947E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmasSagas.Orchestrators", "XmasSagas.Orchestrators\XmasSagas.Orchestrators.csproj", "{E850A787-93F5-4A25-BA62-6841B96EC40D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmasSagas.Orchestrators", "XmasSagas.Orchestrators\XmasSagas.Orchestrators.csproj", "{E850A787-93F5-4A25-BA62-6841B96EC40D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

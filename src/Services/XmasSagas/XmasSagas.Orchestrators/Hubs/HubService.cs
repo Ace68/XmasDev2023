@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace XmasSagas.Orchestrators.Hubs;
 
-public sealed class HubService(IServiceProvider serviceProvider) : IHubService
+public sealed class HubService(IHubContext<XmasHub, IHubsHelper> hubContext) : IHubService
 {
-	private readonly IHubContext<XmasHub, IHubsHelper> hubContext = serviceProvider.GetRequiredService<IHubContext<XmasHub, IHubsHelper>>();
-
 	public async Task TellChildrenThatClientIsConnected(string user, string message)
 	{
 		await hubContext.Clients.All.TellChildrenThatClientIsConnected(user, message).ConfigureAwait(false);
