@@ -1,0 +1,37 @@
+{
+  "version": "2.0",
+  "logging": {
+    "applicationInsights": {
+      "samplingSettings": {
+        "isEnabled": true,
+        "excludedTypes": "Request"
+      }
+    }
+  },
+  "extensions": {
+    "rabbitMQ": {
+      "prefetchCount": 100,
+      "TellChildrenThatXmasSagaWasStarted": "TellChildrenThatXmasSagaWasStarted",
+      "RabbitMQConnectionString": "amqp://guest:guest@localhost:5672",
+      "port": 5672
+    },
+    "signalR": {
+      "enableDetailedErrors": true,
+      "handshakeTimeout": "00:00:30",
+      "keepAliveInterval": "00:00:15",
+      "clientTimeoutInterval": "00:00:30",
+      "disconnectTimeout": "00:00:30",
+      "enableJSONP": false,
+      "transports": "WebSockets,ServerSentEvents,LongPolling",
+      "defaultMessageBufferSize": 1024,
+      "hubOptions": {
+        "EnableDetailedErrors": true,
+        "EnableJavaScriptProxies": true,
+        "EnableJSONP": false,
+        "RequireAuthenticationForHubMethodCalls": false,
+        "EnableAutoRejoiningGroups": false,
+        "EnableMessageBuffering": false,
+        "Resolver": null
+      }
+    }}
+  }

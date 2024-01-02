@@ -52,7 +52,8 @@ public class XmasLetterSaga(IServiceBus serviceBus, ISagaRepository repository, 
 						command.ReceivedOn, command.ChildEmail, command.LetterSubject, command.LetterBody);
 		await ServiceBus.SendAsync(receiveXmasLetter, CancellationToken.None);
 
-		await _hubService.TellChildrenThatXmasSagaWasStarted("Santa Claus", "Your xmasLetter has been Received");
+		TellChildrenThatXmasSagaWasStarted tellChildrenThatXmasSagaWasStarted = new(command.XmasLetterId, command.MessageId);
+		await ServiceBus.SendAsync(tellChildrenThatXmasSagaWasStarted, CancellationToken.None);
 	}
 
 	public async Task HandleAsync(XmasPresentsApproved @event)
@@ -77,6 +78,8 @@ public class XmasLetterSaga(IServiceBus serviceBus, ISagaRepository repository, 
 		var sagaState = await Repository.GetByIdAsync<XmasLetterSagaState>(correlationId);
 		sagaState.XmasPresentsReadyToSend = true;
 		await Repository.SaveAsync(correlationId, sagaState);
+
+		await _hubService.TellChildrenThatXmasLetterWasProcessed("Santa Claus", "Your xmasLetter has ready");
 
 		await ServiceBus.SendAsync(new SendXmasPresents(@event.XmasLetterId, correlationId, @event.LetterBody),
 			CancellationToken.None);

@@ -9,7 +9,9 @@ public class SignalRModule : IModule
 
 	public IServiceCollection RegisterModule(WebApplicationBuilder builder)
 	{
-		builder.Services.AddSignalR();
+		var signalRSettings = builder.Configuration["XmasDev:AzureSignarlRSettings:ConnectionString"];
+		builder.Services.AddSignalR()
+			.AddAzureSignalR(builder.Configuration["XmasDev:AzureSignarlRSettings:ConnectionString"]);
 
 		return builder.Services;
 	}

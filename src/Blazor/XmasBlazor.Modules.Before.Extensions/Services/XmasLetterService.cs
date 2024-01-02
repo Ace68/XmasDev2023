@@ -11,4 +11,9 @@ public sealed class XmasLetterService(IHttpService httpService,
 	{
 		await httpService.Post($"{appConfiguration.XmasLetterApiUri}v1/sagas/xmasletters", xmasLetter);
 	}
+
+	public async Task<SignalRToken> GetAccessTokenAsync(string appConfigurationTokenNegotiateUri)
+	{
+		return await httpService.NegotiateSignalrTokenAsync(appConfigurationTokenNegotiateUri);
+	}
 }

@@ -26,6 +26,7 @@ public static class SagasEndpoint
 
 	public static IEndpointRouteBuilder MapSignalR(this IEndpointRouteBuilder endpoints)
 	{
+		//endpoints.Use
 		endpoints.MapHub<XmasHub>("/hubs/xmas", options =>
 		{
 			options.AllowStatefulReconnects = true;

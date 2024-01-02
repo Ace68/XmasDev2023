@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using XmasBlazor.Shared.Abstracts;
+using XmasBlazor.Shared.Configuration;
 
 namespace XmasBlazor.Shared.Concretes
 {
@@ -22,6 +23,23 @@ namespace XmasBlazor.Shared.Concretes
 			_httpClient = httpClient;
 			_navigationManager = navigationManager;
 			_sessionStorageService = sessionStorageService;
+		}
+
+		public async Task<SignalRToken> NegotiateSignalrTokenAsync(string uri)
+		{
+			//var response = await _httpClient.GetAsync(uri);
+			//var token = await response.Content.ReadFromJsonAsync<SignalRToken>();
+
+			//return token;
+
+			SignalRToken signalRToken = new()
+			{
+				Url = "https://brewup-signalrproxy.service.signalr.net/client/?hub=xmas",
+				AccessToken =
+					"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjE1ODcxMjMyNzgifQ.eyJuYmYiOjE3MDM4NjQ5OTMsImV4cCI6MTcwMzg2ODU5MywiaWF0IjoxNzAzODY0OTkzLCJhdWQiOiJodHRwczovL2JyZXd1cC1zaWduYWxycHJveHkuc2VydmljZS5zaWduYWxyLm5ldC9jbGllbnQvP2h1Yj14bWFzIn0.PNBgmCckPh6GXqsMcx7pcEnfKrjo3pmg3lF5PYWz1Mc"
+			};
+
+			return Task.FromResult(signalRToken).Result;
 		}
 
 		public async Task<byte[]> DownloadAsync(string uri)

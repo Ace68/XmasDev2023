@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "BrewUpNegotiate": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7271"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "httpPort": 33931,
+      "useSSL": false
+    }
+  }
+}

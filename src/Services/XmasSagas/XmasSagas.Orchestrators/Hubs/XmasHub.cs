@@ -6,6 +6,9 @@ public class XmasHub : Hub<IHubsHelper>
 {
 	public override async Task OnConnectedAsync()
 	{
+		var connectionId = Context.ConnectionId;
+		ChildrenService.Childrens.Add(new Children(connectionId));
+
 		await Clients.All.TellChildrenThatClientIsConnected("Santa Claus", "SantaClaus is Connected").ConfigureAwait(false);
 		await Clients.All.TellChildrenThatClientIsConnected("Santa Claus", "Waiting for xmasLetter").ConfigureAwait(false);
 

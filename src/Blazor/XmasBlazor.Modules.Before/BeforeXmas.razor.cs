@@ -27,8 +27,17 @@ public class BeforeXmasBase : ComponentBase, IAsyncDisposable
 	{
 		Bus.Subscribe<XmasLetterSubmitted>(XmasLetterSubmittedEventHandler);
 
+		var signalRUri = new Uri(AppConfiguration.SignalRUri);
+
 		_hubConnection = new HubConnectionBuilder()
-			.WithUrl(new Uri(AppConfiguration.SignalRUri))
+			.WithUrl(signalRUri, options =>
+			{
+				options.AccessTokenProvider = async () =>
+				{
+					var token = await XmasLetterService.GetAccessTokenAsync(AppConfiguration.TokenNegotiateUri);
+					return token.AccessToken;
+				};
+			})
 			.WithServerTimeout(TimeSpan.FromSeconds(60))
 			.WithKeepAliveInterval(TimeSpan.FromSeconds(15))
 			.WithAutomaticReconnect()
@@ -42,16 +51,38 @@ public class BeforeXmasBase : ComponentBase, IAsyncDisposable
 		_hubConnection.On<string, string>("TellChildrenThatClientIsConnected", UpdateXmasMessagesAsync);
 
 		_hubConnection.On<string, string>("TellChildrenThatXmasSagaWasStarted", UpdateXmasMessagesAsync);
+		_hubConnection.On<string>("TellChildrenThatXmasSagaWasStarted", UpdateXmasMessagesAsync);
 		_hubConnection.On<string, string>("TellChildrenThatXmasLetterWasApproved", UpdateXmasMessagesAsync);
 		_hubConnection.On<string, string>("TellChildrenThatXmasLetterWasProcessed", UpdateXmasMessagesAsync);
 		_hubConnection.On<string, string>("TellChildrenThatXmasSagaWasCompleted", UpdateXmasMessagesAsync);
 
 		await _hubConnection.StartAsync();
 
+		if (_hubConnection.State == HubConnectionState.Connected)
+		{
+			XmasLetterMessages = XmasLetterMessages.Concat(new List<string>
+			{
+				"SantaClaus is connected."
+			});
+		}
+
 		await base.OnInitializedAsync();
 	}
 
 	private async Task UpdateXmasMessagesAsync(string target, string message)
+	{
+		if (string.IsNullOrWhiteSpace(message))
+			message = "No Message";
+
+		XmasLetterMessages = XmasLetterMessages.Concat(new List<string>
+		{
+			message
+		});
+
+		await InvokeAsync(StateHasChanged);
+	}
+
+	private async Task UpdateXmasMessagesAsync(string message)
 	{
 		if (string.IsNullOrWhiteSpace(message))
 			message = "No Message";

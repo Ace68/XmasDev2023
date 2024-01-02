@@ -9,7 +9,10 @@ public sealed class HubService(IServiceProvider serviceProvider) : IHubService
 
 	public async Task TellChildrenThatClientIsConnected(string user, string message)
 	{
-		await hubContext.Clients.All.TellChildrenThatClientIsConnected(user, message).ConfigureAwait(false);
+		foreach (var children in ChildrenService.Childrens)
+		{
+			await hubContext.Clients.User(children.ConnectionId).TellChildrenThatClientIsConnected(user, message).ConfigureAwait(false);
+		}
 	}
 
 	public async Task TellChildrenThatClientIsDisconnected(string user, string message)
@@ -19,6 +22,10 @@ public sealed class HubService(IServiceProvider serviceProvider) : IHubService
 
 	public async Task TellChildrenThatXmasSagaWasStarted(string user, string message)
 	{
+		foreach (var children in ChildrenService.Childrens)
+		{
+			await hubContext.Clients.User(children.ConnectionId).TellChildrenThatXmasSagaWasStarted(user, message).ConfigureAwait(false);
+		}
 		await hubContext.Clients.All.TellChildrenThatXmasSagaWasStarted(user, message).ConfigureAwait(false);
 	}
 

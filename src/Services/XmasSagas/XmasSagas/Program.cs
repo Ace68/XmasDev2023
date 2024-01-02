@@ -12,6 +12,11 @@ app.UseCors("CorsPolicy");
 // Register endpoints
 app.MapEndpoints();
 
+//app.UseEndpoints(routes =>
+//{
+//	routes.MapHub<XmasHub>("/hubs/xmas");
+//});
+
 // Configure the HTTP request pipeline.
 app.UseSwagger(s =>
 {

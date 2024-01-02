@@ -6,6 +6,8 @@ using Muflone.Transport.RabbitMQ.Factories;
 using Muflone.Transport.RabbitMQ.Models;
 using XmasSagas.Infrastructures.RabbitMq.Commands;
 using XmasSagas.Infrastructures.RabbitMq.Events;
+using XmasSagas.Infrastructures.RabbitMq.SignalR;
+using XmasSagas.Orchestrators.Hubs;
 using XmasSagas.Shared.Configurations;
 
 namespace XmasSagas.Infrastructures.RabbitMq;
@@ -24,6 +26,7 @@ public static class RabbitMqHelper
 
 		services.AddMufloneTransportRabbitMQ(loggerFactory, rabbitMqConfiguration);
 
+		services.AddScoped<IHubService, HubService>();
 		serviceProvider = services.BuildServiceProvider();
 		var consumers = serviceProvider.GetRequiredService<IEnumerable<IConsumer>>();
 		var consumerConfiguration = new ConsumerConfiguration
@@ -43,6 +46,7 @@ public static class RabbitMqHelper
 			new CloseXmasLetterConsumer(mufloneConnectionFactory, loggerFactory),
 			new XmasLetterProcessedConsumer(serviceProvider, mufloneConnectionFactory, loggerFactory),
 			new XmasSagaCompletedConsumer(serviceProvider, mufloneConnectionFactory, loggerFactory),
+			new TellChildrenThatXmasSagaWasStartedConsumer(mufloneConnectionFactory, loggerFactory)
 		});
 		services.AddMufloneRabbitMQConsumers(consumers);
 

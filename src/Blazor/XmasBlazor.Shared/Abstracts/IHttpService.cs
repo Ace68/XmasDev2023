@@ -1,7 +1,11 @@
-﻿namespace XmasBlazor.Shared.Abstracts
+﻿using XmasBlazor.Shared.Configuration;
+
+namespace XmasBlazor.Shared.Abstracts
 {
 	public interface IHttpService
 	{
+		Task<SignalRToken> NegotiateSignalrTokenAsync(string uri);
+
 		Task<byte[]> DownloadAsync(string uri);
 		Task<T> Get<T>(string uri);
 		Task<string> GetSettings<T>(string uri);
