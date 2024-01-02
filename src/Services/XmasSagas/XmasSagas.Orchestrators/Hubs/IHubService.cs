@@ -1,7 +1,11 @@
-﻿namespace XmasSagas.Orchestrators.Hubs;
+﻿using Microsoft.AspNetCore.SignalR;
+
+namespace XmasSagas.Orchestrators.Hubs;
 
 public interface IHubService
 {
+	void RegisterHubContext(IHubContext<XmasHub, IHubsHelper> hubContext);
+
 	Task TellChildrenThatClientIsConnected(string user, string message);
 	Task TellChildrenThatClientIsDisconnected(string user, string message);
 

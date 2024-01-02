@@ -26,7 +26,7 @@ public static class SagasEndpoint
 
 	public static IEndpointRouteBuilder MapSignalR(this IEndpointRouteBuilder endpoints)
 	{
-		endpoints.MapHub<XmasHub>("/hubs/xmas", options =>
+		endpoints.MapHub<XmasHub>("/xmas", options =>
 		{
 			options.AllowStatefulReconnects = true;
 		});
@@ -48,17 +48,6 @@ public static class SagasEndpoint
 		await sagasFacade.SendXmasLettersAsync(body, cancellationToken);
 		return Results.Ok();
 	}
-
-	//public static async Task<IResult> HandleSignalR(IHubContext<XmasHub, IHubsHelper> hubContext)
-	//{
-	//	await hubContext.Clients.All.TellChildrenThatXmasSagaWasStarted("Santa Claus", "Your xmasLetter has been Received");
-	//	await hubContext.Clients.All.TellChildrenThatXmasLetterWasApproved("Santa Claus", "Your xmasLetter has been Approved");
-	//	await hubContext.Clients.All.TellChildrenThatXmasLetterWasProcessed("Santa Claus", "Your xmasLetter has been Processed");
-	//	await hubContext.Clients.All.TellChildrenThatXmasSagaWasCompleted("Santa Claus", "XmasSaga is completed");
-
-
-	//	return Results.NoContent();
-	//}
 
 	public static async Task<IResult> HandleSignalR(IHubService hubService)
 	{
